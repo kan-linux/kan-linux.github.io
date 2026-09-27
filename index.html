@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Kan-Linux — a Simplicity, Source-built, Agent-First Linux distro for programmers, AI researchers and distro builders.">
+<title>Kan-Linux — Simplicity, Source-built, Agent-First Linux</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<style>
+:root {
+  --bg: #0d1117;
+  --bg-soft: #131a24;
+  --bg-card: #161d29;
+  --border: #243041;
+  --text: #e8eef6;
+  --muted: #9aa8b8;
+  --accent: #f0782c;
+  --accent-soft: rgba(240, 120, 44, 0.14);
+  --ok: #3dd68c;
+  --radius: 14px;
+  --max: 860px;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+          "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.wrap {
+  width: min(var(--max), calc(100% - 2.5rem));
+  margin: 0 auto;
+}
+
+/* ---------- header ---------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: rgba(13, 17, 23, 0.82);
+  border-bottom: 1px solid rgba(36, 48, 65, 0.7);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 0;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--text);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  min-width: 0;
+}
+.brand:hover { text-decoration: none; }
+
+.brand-mark {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 8px;
+  object-fit: cover;
+  object-position: left center;
+  flex-shrink: 0;
+  background: var(--bg-soft);
+}
+
+.brand-name {
+  font-size: 1.05rem;
+  white-space: nowrap;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.15rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  color: var(--muted);
+  font-size: 0.92rem;
+  text-decoration: none;
+}
+.nav-links a:hover { color: var(--text); }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.62rem 1.15rem;
+  border-radius: 999px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: transform .15s ease, background .15s ease, border-color .15s ease;
+  white-space: nowrap;
+}
+.btn:hover {
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+.btn-primary {
+  background: var(--accent);
+  color: #1a0f06;
+}
+.btn-primary:hover { background: #ff8a3d; }
+.btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border);
+}
+.btn-ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ---------- hero ---------- */
+.hero {
+  padding: 2.75rem 0 1.5rem;
+  text-align: center;
+}
+
+.hero-banner {
+  width: min(720px, 100%);
+  margin: 0 auto 1.5rem;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+}
+.hero-banner img {
+  width: 100%;
+  height: auto;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin-bottom: 1rem;
+}
+.badge::before {
+  content: "";
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--ok);
+  box-shadow: 0 0 0 3px rgba(61, 214, 140, 0.18);
+}
+
+.hero h1 {
+  margin: 0 0 0.85rem;
+  font-size: clamp(1.65rem, 5vw, 2.45rem);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  font-weight: 750;
+}
+.hero h1 .accent { color: var(--accent); }
+
+.lead {
+  margin: 0 auto 1.6rem;
+  max-width: 40rem;
+  color: var(--muted);
+  font-size: clamp(1rem, 2.6vw, 1.125rem);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin: 2.25rem auto 0;
+  max-width: 36rem;
+}
+
+.stat {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.9rem 0.5rem;
+}
+.stat b {
+  display: block;
+  color: var(--accent);
+  font-size: 1.15rem;
+  line-height: 1.2;
+}
+.stat span {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+/* ---------- sections ---------- */
+section {
+  padding: 2.25rem 0;
+}
+
+.section-title {
+  margin: 0 0 0.45rem;
+  font-size: clamp(1.35rem, 3.5vw, 1.75rem);
+  letter-spacing: -0.015em;
+}
+
+.section-sub {
+  margin: 0 0 1.5rem;
+  color: var(--muted);
+  max-width: 42rem;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.9rem;
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.3rem;
+}
+.card h3 {
+  margin: 0 0 0.45rem;
+  font-size: 1.05rem;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+.card h3 .dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+.card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+/* principle list */
+.principles {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.85rem;
+}
+.principles li {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 12px;
+  padding: 1.1rem 1.25rem;
+}
+.principles strong {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-size: 1.02rem;
+}
+.principles p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+/* two-column compare */
+.compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem;
+}
+.compare-col {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.3rem;
+}
+.compare-col h3 {
+  margin: 0 0 0.75rem;
+  font-size: 1.02rem;
+  color: var(--muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.78rem;
+}
+.compare-col.hot {
+  border-color: rgba(240, 120, 44, 0.45);
+  background: linear-gradient(180deg, rgba(240, 120, 44, 0.08), var(--bg-card));
+}
+.compare-col.hot h3 { color: var(--accent); }
+.compare-col ul {
+  margin: 0;
+  padding-left: 1.15rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+.compare-col li { margin-bottom: 0.45rem; }
+
+/* roadmap */
+.roadmap {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+.roadmap::before {
+  content: "";
+  position: absolute;
+  left: 0.55rem;
+  top: 0.4rem;
+  bottom: 0.4rem;
+  width: 2px;
+  background: var(--border);
+}
+.roadmap li {
+  position: relative;
+  padding: 0 0 1.15rem 1.85rem;
+}
+.roadmap li:last-child { padding-bottom: 0; }
+.roadmap li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.45rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--border);
+}
+.roadmap li.done::before {
+  background: var(--ok);
+  border-color: var(--ok);
+  box-shadow: 0 0 0 3px rgba(61, 214, 140, 0.15);
+}
+.roadmap li.current::before {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(240, 120, 44, 0.18);
+}
+.roadmap .status {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  margin-left: 0.45rem;
+  vertical-align: middle;
+}
+.roadmap .status.done {
+  background: rgba(61, 214, 140, 0.15);
+  color: var(--ok);
+}
+.roadmap .status.doing {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.roadmap .status.todo {
+  background: rgba(154, 168, 184, 0.12);
+  color: var(--muted);
+}
+.roadmap p {
+  margin: 0.25rem 0 0;
+  color: var(--muted);
+  font-size: 0.93rem;
+}
+
+/* cta */
+.cta {
+  background:
+    radial-gradient(1000px 320px at 50% -20%, rgba(240, 120, 44, 0.18), transparent 70%),
+    var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) + 4px);
+  padding: 2.25rem 1.5rem;
+  text-align: center;
+}
+.cta h2 {
+  margin: 0 0 0.55rem;
+  font-size: clamp(1.35rem, 3.5vw, 1.8rem);
+}
+.cta p {
+  margin: 0 auto 1.35rem;
+  color: var(--muted);
+  max-width: 32rem;
+}
+.cta .hero-actions { justify-content: center; }
+
+/* footer */
+.site-footer {
+  margin-top: 1.5rem;
+  padding: 1.75rem 0 2.5rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+.site-footer a { color: var(--muted); }
+.site-footer a:hover { color: var(--accent); }
+.footer-note {
+  border-top: 1px solid var(--border);
+  padding-top: 1.15rem;
+  font-size: 0.82rem;
+  color: #6f7d8c;
+}
+.footer-note p { margin: 0.35rem 0; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 720px) {
+  .wrap { width: min(var(--max), calc(100% - 1.75rem)); }
+
+  .nav-links { display: none; }
+
+  .hero { padding: 1.75rem 0 0.75rem; }
+
+  .stats { grid-template-columns: repeat(3, 1fr); gap: 0.55rem; }
+  .stat { padding: 0.75rem 0.35rem; }
+  .stat b { font-size: 1rem; }
+  .stat span { font-size: 0.72rem; }
+
+  .card-grid,
+  .compare {
+    grid-template-columns: 1fr;
+  }
+
+  section { padding: 1.75rem 0; }
+
+  .cta { padding: 1.75rem 1.15rem; }
+
+  .hero-actions .btn { width: 100%; }
+  .hero-actions { flex-direction: column; }
+}
+
+@media (max-width: 420px) {
+  .brand-name { font-size: 0.98rem; }
+  .btn { padding: 0.58rem 0.95rem; font-size: 0.88rem; }
+  .stats { grid-template-columns: 1fr 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="Kan-Linux home">
+      <img class="brand-mark" src="assets/kanlinux-mark.png" alt="Kan-Linux logo">
+      <span class="brand-name">Kan-Linux</span>
+    </a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#principles">Principles</a></li>
+        <li><a href="#omarchy">vs Omarchy</a></li>
+        <li><a href="#roadmap">Roadmap</a></li>
+        <li><a href="#contribute">Contribute</a></li>
+      </ul>
+    </nav>
+    <a class="btn btn-primary" href="https://github.com/kan-linux/kan" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-banner">
+        <img src="assets/kanlinux-banner.png"
+             alt="Kan-Linux — a Simplicity, Source-built, Agent-First Linux distro."
+             width="1802" height="513">
+      </div>
+
+      <div class="badge">Open development · Source-built from scratch</div>
+
+      <h1>
+        Build your own Linux.<br>
+        <span class="accent">Simple.</span> Source-built. Agent-First.
+      </h1>
+
+      <p class="lead">
+        <a href="https://github.com/kan-linux/kan"><b>Kan-Linux</b></a>
+        is a simplicity, source-built, agent-first Linux distribution for building
+        customizable Wayland desktops — enabling programmers and AI researchers to
+        build their own Linux OS with minimal setup, locally and in the cloud.
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="https://github.com/kan-linux/kan/releases/tag/v0.2.7" target="_blank" rel="noopener">Download LiveISO</a>
+        <a class="btn btn-ghost" href="https://github.com/kan-linux/kan" target="_blank" rel="noopener">View Source</a>
+      </div>
+
+      <div class="stats" aria-label="Project highlights">
+        <div class="stat"><b>Monorepo</b><span>All sources in one tree</span></div>
+        <div class="stat"><b>Source-built</b><span>Built entirely from source — no upstream distribution</span></div>
+        <div class="stat"><b>Agent-First</b><span>AI-native build &amp; audit</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <div class="wrap">
+      <h2 class="section-title">What is Kan-Linux?</h2>
+      <p class="section-sub">
+        <strong>Kan-Linux</strong> (or KanLinux) is a <strong>Simplicity</strong>,
+        <strong>Source-Built</strong>, <strong>Agent-First</strong> Linux distribution.
+      </p>
+
+      <div class="card-grid">
+        <article class="card">
+          <h3><span class="dot"></span>The name · 勘</h3>
+          <p>
+            <b>Kan (勘)</b> derives from <i>Instructions for Practical Living</i> by
+            <a href="https://en.wikipedia.org/wiki/Wang_Yangming" target="_blank" rel="noopener">Wang Yangming</a> —
+            breaking through technical obscurations and returning to the system’s
+            original simplicity. It also stands for
+            <i>“see through the delusions and return to simplicity.”</i>
+          </p>
+        </article>
+        <article class="card">
+          <h3><span class="dot"></span>The goal</h3>
+          <p>
+            Enable programmers and AI researchers to build their own Linux OS
+            (Omarchy-style, for example) from the full source code with minimal
+            setup on a wide range of hardware — locally and in the cloud.
+          </p>
+        </article>
+        <article class="card">
+          <h3><span class="dot"></span>How it’s built</h3>
+          <p>
+            An AOSP-style monorepo holds component sources and verified patches —
+            from toolchain and libc through system utils, mesa and the Wayland
+            desktop stack. The OS is compiled from source, not assembled from an
+            upstream distro, so builds stay reproducible and auditable end to end.
+          </p>
+        </article>
+        <article class="card">
+          <h3><span class="dot"></span>Who it is for</h3>
+          <p>
+            Programmers, AI researchers and Linux distribution builders who want
+            <b>controllability</b>, <b>auditability</b> (no black-box within the OS),
+            <b>modularity</b> and <b>reproducible builds</b> — not a polished
+            out-of-the-box consumer desktop.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Principles -->
+  <section id="principles">
+    <div class="wrap">
+      <h2 class="section-title">Design Principles</h2>
+      <p class="section-sub">
+        The Kan-Linux way: keep the system small, honest and fun to hack on.
+      </p>
+
+      <ul class="principles">
+        <li>
+          <strong>Minimal</strong>
+          <p>
+            We like simplicity and aim to keep the distribution as small and as
+            simple as possible. Eliminate overly complex wrapper layers and
+            overengineering, following the core philosophy of
+            <a href="https://github.com/ggml-org/llama.cpp" target="_blank" rel="noopener">ggml/llama.cpp</a>.
+            Not dependent on any existing Linux distribution.
+          </p>
+        </li>
+        <li>
+          <strong>Monorepo</strong>
+          <p>
+            Drawing lessons from existing Linux distributions and the highly
+            sophisticated <a href="https://www.yoctoproject.org/" target="_blank" rel="noopener">Yocto</a> Project,
+            the project uses an AOSP-style single-repository architecture. All source
+            code is stored and hosted in one single code repository to simplify
+            development, build and maintenance work.
+          </p>
+        </li>
+        <li>
+          <strong>Source-Built</strong>
+          <p>
+            The entire OS and all components are built from source. Every component
+            ships with verified custom patches, and self-contained source snapshots
+            can produce a live ISO directly from source code.
+          </p>
+        </li>
+        <li>
+          <strong>llama.cpp-First</strong>
+          <p>
+            Built-in native llama.cpp edge inference engine for local AI deployment —
+            keep inference close to the metal, without heavy external runtimes.
+          </p>
+        </li>
+        <li>
+          <strong>Agent-First &amp; AI-native security audit</strong>
+          <p>
+            Supports AI agents to autonomously compile, deploy, install components,
+            run system checks and resolve issues. Kan-Linux embeds LLM-based
+            source-level security audit (GLM-5.3 and others) as a mandatory gate
+            before compilation. Security is shifted from “binary post-scanning” to
+            source pre-admission auditing.
+          </p>
+        </li>
+        <li>
+          <strong>Open development</strong>
+          <p>
+            The development process is open and everyone is welcome to join. Explore
+            and have fun — contributors are encouraged to try crazy ideas, build wild
+            demos, and push the edge of what’s possible.
+          </p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Omarchy -->
+  <section id="omarchy">
+    <div class="wrap">
+      <h2 class="section-title">Differences &amp; Connections with Omarchy</h2>
+      <p class="section-sub">
+        Inspired by Omarchy — but aimed at a different audience and a different
+        layer of the stack.
+      </p>
+
+      <div class="compare">
+        <div class="compare-col">
+          <h3>Omarchy</h3>
+          <ul>
+            <li>Targets end users, delivering an out-of-the-box complete desktop system.</li>
+            <li><b>Visual polish as one of its core goals.</b></li>
+            <li>Based on the upstream Arch Linux distribution.</li>
+          </ul>
+        </div>
+        <div class="compare-col hot">
+          <h3>Kan-Linux</h3>
+          <ul>
+            <li>Targets programmers, AI researchers and Linux distribution builders.</li>
+            <li>Provides a neutral Wayland underlying graphics platform.</li>
+            <li>
+              Core goals: <b>controllability</b>,
+              <b>auditability</b> (no black-box within the OS),
+              <b>modularity</b> and <b>reproducible builds</b>.
+              Visual polish is <i>not</i> a project objective.
+            </li>
+            <li>
+              Built completely from scratch and
+              <b>does not rely on any upstream Linux distribution</b>.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="section-sub" style="margin-top: 1.15rem; margin-bottom: 0;">
+        Kan-Linux draws inspiration from
+        Omarchy("Convention over Configuration") and <a href="https://github.com/kan-linux/omarchy" target="_blank" rel="noopener">Omarchy’s desktop shell</a>,
+        and integrates it as our optional early default desktop. We port this shell
+        as an upper-layer UI example to show the capabilities of the Kan-Linux
+        platform. Even if we remove or disable the Omarchy shell in the future, the
+        whole system and graphics infrastructure can still run fully and independently.
+      </p>
+    </div>
+  </section>
+
+  <!-- Roadmap -->
+  <section id="roadmap">
+    <div class="wrap">
+      <h2 class="section-title">Roadmap</h2>
+      <p class="section-sub">From QEMU PoC to bare-metal self-hosting, desktop-native AI agents and AArch64.</p>
+
+      <ol class="roadmap">
+        <li class="done">
+          <strong>Stage 1: PoC validation</strong>
+          <span class="status done">Done</span>
+          <p>
+            Complete <a href="https://github.com/kan-linux/kan/releases/tag/v0.2.6" target="_blank" rel="noopener">PoC validation</a>
+            of Kan-Linux via QEMU virtual machine.
+          </p>
+        </li>
+        <li class="done">
+          <strong>Stage 2.1: Omarchy shell in QEMU</strong>
+          <span class="status done">Done</span>
+          <p>
+            Integrate a preliminary, feature-limited,
+            <a href="https://github.com/kan-linux/omarchy/tree/kan" target="_blank" rel="noopener">customized Omarchy desktop shell</a>
+            and login greeter for QEMU virtual machine environments.
+          </p>
+        </li>
+        <li class="current">
+          <strong>Stage 2.2: Physical x86_64 desktops</strong>
+          <span class="status doing">In progress</span>
+          <p>Enable and validate Kan-Linux boot and runtime support for physical x86_64 desktop PCs.</p>
+        </li>
+        <li>
+          <strong>Stage 2.3: Physical x86_64 laptops</strong>
+          <span class="status todo">Planned</span>
+          <p>Enable and validate Kan-Linux boot and runtime support for physical x86_64 laptops.</p>
+        </li>
+        <li>
+          <strong>Milestone: Bare-metal install &amp; full self-hosting</strong>
+          <span class="status todo">Planned</span>
+          <p>
+            Kan-Linux LiveISO supports bare-metal installation. Kan-Linux achieves
+            full self-hosting — all subsequent development, building and iteration
+            of Kan-Linux will happen <b>inside Kan-Linux itself</b>.
+          </p>
+        </li>
+        <li>
+          <strong>Stage 2.4–2.5: Desktop-native AI Agent</strong>
+          <span class="status todo">Planned</span>
+          <p>
+            Integrate desktop-native AI Agent in Kan-Linux on physical x86_64 hardware,
+            then fully verify desktop-native AI Agent functionality on desktop and laptop hardware.
+          </p>
+        </li>
+        <li>
+          <strong>Stage 2.6: Stabilize the Omarchy shell</strong>
+          <span class="status todo">Planned</span>
+          <p>Refine and stabilize the Omarchy desktop shell for physical x86_64 desktops and laptops.</p>
+        </li>
+        <li>
+          <strong>Stage 3: AArch64 laptops</strong>
+          <span class="status todo">Planned</span>
+          <p>Port and validate Kan-Linux for AArch64 laptop devices.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Contribute / CTA -->
+  <section id="contribute">
+    <div class="wrap">
+      <div class="cta">
+        <h2>Explore and have fun!</h2>
+        <p>
+          We build <a href="https://github.com/kan-linux/kan">Kan-Linux</a> in the
+          spirit of play. Contributors are encouraged to try crazy ideas, build wild
+          demos, and push the edge of what’s possible. Join the development on GitHub.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://github.com/kan-linux/kan" target="_blank" rel="noopener">Contribute on GitHub</a>
+          <a class="btn btn-ghost" href="https://github.com/kan-linux/kan/releases/tag/v0.2.7" target="_blank" rel="noopener">Screenshots &amp; LiveISO</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-note">
+      <p>
+        This project may include trademarks or logos belonging to third parties.
+        Use of any third-party trademarks is governed by their respective policies.
+      </p>
+      <p>© <span id="year">2026</span> Kan-Linux · <a href="https://kan-linux.org">kan-linux.org</a> · see through the delusions and return to simplicity</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</body>
+</html>
