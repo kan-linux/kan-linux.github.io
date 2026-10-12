@@ -604,7 +604,7 @@ section {
     <div class="wrap">
       <h2 class="section-title">Design Principles</h2>
       <p class="section-sub">
-        The Kan-Linux way: keep the system small, honest and fun to hack on.
+        The Kan-Linux way: Simplicity, Open Core, Safety, Explore and have fun
       </p>
 
       <ul class="principles">
@@ -651,6 +651,16 @@ section {
             source-level security audit (GLM-5.3 and others) as a mandatory gate
             before compilation. Security is shifted from “binary post-scanning” to
             source pre-admission auditing.
+          </p>
+        </li>
+        <li>
+          <strong>Safety</strong>
+          <p>
+            Kan-Linux makes no external network activity after boot — no silent
+            update checks, no telemetry, no phone-home. Kan-Linux only talks
+            when you tell it to. Verify it yourself with the bundled
+            <a href="https://www.wireshark.org/" target="_blank" rel="noopener">tshark</a>
+            (the Wireshark CLI).
           </p>
         </li>
         <li>
@@ -717,7 +727,7 @@ section {
   <section id="roadmap">
     <div class="wrap">
       <h2 class="section-title">Roadmap</h2>
-      <p class="section-sub">From QEMU PoC to bare-metal self-hosting, desktop-native AI agents and AArch64.</p>
+      <p class="section-sub">From QEMU PoC to bare-metal self-hosting and desktop-native AI agents.</p>
 
       <ol class="roadmap">
         <li class="done">
@@ -770,9 +780,9 @@ section {
           <p>Refine and stabilize the Omarchy desktop shell for physical x86_64 desktops and laptops.</p>
         </li>
         <li>
-          <strong>Stage 3: AArch64 laptops</strong>
+          <strong>Stage 3: Refine </strong>
           <span class="status todo">Planned</span>
-          <p>Port and validate Kan-Linux for AArch64 laptop devices.</p>
+          <p>Refine and stabilized Kan-Linux on physical x86_64 hardware.</p>
         </li>
       </ol>
     </div>
