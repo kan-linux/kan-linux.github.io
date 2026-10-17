@@ -500,9 +500,6 @@ section {
     </a>
     <nav>
       <ul class="nav-links">
-        <li><a href="#about">About</a></li>
-        <li><a href="#principles">Principles</a></li>
-        <li><a href="#omarchy">vs Omarchy</a></li>
         <li><a href="#roadmap">Roadmap</a></li>
         <li><a href="#contribute">Contribute</a></li>
       </ul>
@@ -516,210 +513,16 @@ section {
   <!-- Hero -->
   <section class="hero">
     <div class="wrap">
-      <div class="hero-banner">
-        <img src="assets/kanlinux-banner.png"
-             alt="Kan-Linux — a Simplicity, Source-built, Agent-First Linux distro."
-             width="1802" height="513">
-      </div>
-
-      <div class="badge">Open development · Source-built from scratch</div>
-
       <h1>
         Build your own Linux.<br>
-        <span class="accent">Simple.</span> Source-built. Agent-First.
+        <span class="accent">Simple.</span> Source-built. Secure. Agent-First.
       </h1>
 
-      <p class="lead">
-        <a href="https://github.com/kan-linux/kan"><b>Kan-Linux</b></a>
-        is a simplicity, source-built, agent-first Linux distribution for building
-        customizable Wayland desktops — enabling programmers and AI researchers to
-        build their own Linux OS with minimal setup, locally and in the cloud.
-      </p>
-
       <div class="hero-actions">
-        <a class="btn btn-primary" href="https://github.com/kan-linux/kan/releases/tag/v0.2.7" target="_blank" rel="noopener">Download LiveISO</a>
+        <a class="btn btn-primary" href="https://github.com/kan-linux/kan/releases/tag/v0.2.8" target="_blank" rel="noopener">Download LiveISO</a>
         <a class="btn btn-ghost" href="https://github.com/kan-linux/kan" target="_blank" rel="noopener">View Source</a>
       </div>
 
-      <div class="stats" aria-label="Project highlights">
-        <div class="stat"><b>Monorepo</b><span>All sources in one tree</span></div>
-        <div class="stat"><b>Source-built</b><span>Built entirely from source — no upstream distribution</span></div>
-        <div class="stat"><b>Agent-First</b><span>AI-native build &amp; audit</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- About -->
-  <section id="about">
-    <div class="wrap">
-      <h2 class="section-title">What is Kan-Linux?</h2>
-      <p class="section-sub">
-        <strong>Kan-Linux</strong> (or KanLinux) is a <strong>Simplicity</strong>,
-        <strong>Source-Built</strong>, <strong>Agent-First</strong> Linux distribution.
-      </p>
-
-      <div class="card-grid">
-        <article class="card">
-          <h3><span class="dot"></span>The name · 勘</h3>
-          <p>
-            <b>Kan (勘)</b> derives from <i>Instructions for Practical Living</i> by
-            <a href="https://en.wikipedia.org/wiki/Wang_Yangming" target="_blank" rel="noopener">Wang Yangming</a> —
-            breaking through technical obscurations and returning to the system’s
-            original simplicity. It also stands for
-            <i>“see through the delusions and return to simplicity.”</i>
-          </p>
-        </article>
-        <article class="card">
-          <h3><span class="dot"></span>The goal</h3>
-          <p>
-            Enable programmers and AI researchers to build their own Linux OS
-            (Omarchy-style, for example) from the full source code with minimal
-            setup on a wide range of hardware — locally and in the cloud.
-          </p>
-        </article>
-        <article class="card">
-          <h3><span class="dot"></span>How it’s built</h3>
-          <p>
-            An AOSP-style monorepo holds component sources and verified patches —
-            from toolchain and libc through system utils, mesa and the Wayland
-            desktop stack. The OS is compiled from source, not assembled from an
-            upstream distro, so builds stay reproducible and auditable end to end.
-          </p>
-        </article>
-        <article class="card">
-          <h3><span class="dot"></span>Who it is for</h3>
-          <p>
-            Programmers, AI researchers and Linux distribution builders who want
-            <b>controllability</b>, <b>auditability</b> (no black-box within the OS),
-            <b>modularity</b> and <b>reproducible builds</b> — not a polished
-            out-of-the-box consumer desktop.
-          </p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- Principles -->
-  <section id="principles">
-    <div class="wrap">
-      <h2 class="section-title">Design Principles</h2>
-      <p class="section-sub">
-        The Kan-Linux way: Simplicity, Open Core, Safety, Explore and have fun
-      </p>
-
-      <ul class="principles">
-        <li>
-          <strong>Minimal</strong>
-          <p>
-            We like simplicity and aim to keep the distribution as small and as
-            simple as possible. Eliminate overly complex wrapper layers and
-            overengineering, following the core philosophy of
-            <a href="https://github.com/ggml-org/llama.cpp" target="_blank" rel="noopener">ggml/llama.cpp</a>.
-            Not dependent on any existing Linux distribution.
-          </p>
-        </li>
-        <li>
-          <strong>Monorepo</strong>
-          <p>
-            Drawing lessons from existing Linux distributions and the highly
-            sophisticated <a href="https://www.yoctoproject.org/" target="_blank" rel="noopener">Yocto</a> Project,
-            the project uses an AOSP-style single-repository architecture. All source
-            code is stored and hosted in one single code repository to simplify
-            development, build and maintenance work.
-          </p>
-        </li>
-        <li>
-          <strong>Source-Built</strong>
-          <p>
-            The entire OS and all components are built from source. Every component
-            ships with verified custom patches, and self-contained source snapshots
-            can produce a live ISO directly from source code.
-          </p>
-        </li>
-        <li>
-          <strong>llama.cpp-First</strong>
-          <p>
-            Built-in native llama.cpp edge inference engine for local AI deployment —
-            keep inference close to the metal, without heavy external runtimes.
-          </p>
-        </li>
-        <li>
-          <strong>Agent-First &amp; AI-native security audit</strong>
-          <p>
-            Supports AI agents to autonomously compile, deploy, install components,
-            run system checks and resolve issues. Kan-Linux embeds LLM-based
-            source-level security audit (GLM-5.3 and others) as a mandatory gate
-            before compilation. Security is shifted from “binary post-scanning” to
-            source pre-admission auditing.
-          </p>
-        </li>
-        <li>
-          <strong>Safety</strong>
-          <p>
-            Kan-Linux makes no external network activity after boot — no silent
-            update checks, no telemetry, no phone-home. Kan-Linux only talks
-            when you tell it to. Verify it yourself with the bundled
-            <a href="https://www.wireshark.org/" target="_blank" rel="noopener">tshark</a>
-            (the Wireshark CLI).
-          </p>
-        </li>
-        <li>
-          <strong>Open development</strong>
-          <p>
-            The development process is open and everyone is welcome to join. Explore
-            and have fun — contributors are encouraged to try crazy ideas, build wild
-            demos, and push the edge of what’s possible.
-          </p>
-        </li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- Omarchy -->
-  <section id="omarchy">
-    <div class="wrap">
-      <h2 class="section-title">Differences &amp; Connections with Omarchy</h2>
-      <p class="section-sub">
-        Inspired by Omarchy — but aimed at a different audience and a different
-        layer of the stack.
-      </p>
-
-      <div class="compare">
-        <div class="compare-col">
-          <h3>Omarchy</h3>
-          <ul>
-            <li>Targets end users, delivering an out-of-the-box complete desktop system.</li>
-            <li><b>Visual polish as one of its core goals.</b></li>
-            <li>Based on the upstream Arch Linux distribution.</li>
-          </ul>
-        </div>
-        <div class="compare-col hot">
-          <h3>Kan-Linux</h3>
-          <ul>
-            <li>Targets programmers, AI researchers and Linux distribution builders.</li>
-            <li>Provides a neutral Wayland underlying graphics platform.</li>
-            <li>
-              Core goals: <b>controllability</b>,
-              <b>auditability</b> (no black-box within the OS),
-              <b>modularity</b> and <b>reproducible builds</b>.
-              Visual polish is <i>not</i> a project objective.
-            </li>
-            <li>
-              Built completely from scratch and
-              <b>does not rely on any upstream Linux distribution</b>.
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <p class="section-sub" style="margin-top: 1.15rem; margin-bottom: 0;">
-        Kan-Linux draws inspiration from
-        Omarchy("Convention over Configuration") and <a href="https://github.com/kan-linux/omarchy" target="_blank" rel="noopener">Omarchy’s desktop shell</a>,
-        and integrates it as our optional early default desktop. We port this shell
-        as an upper-layer UI example to show the capabilities of the Kan-Linux
-        platform. Even if we remove or disable the Omarchy shell in the future, the
-        whole system and graphics infrastructure can still run fully and independently.
-      </p>
     </div>
   </section>
 
@@ -747,14 +550,14 @@ section {
             and login greeter for QEMU virtual machine environments.
           </p>
         </li>
-        <li class="current">
+        <li class="done">
           <strong>Stage 2.2: Installer</strong>
-          <span class="status doing">In progress</span>
+          <span class="status done"> DONE </span>
           <p>Enable and validate Kan-Linux installer via QEMU virtual machine</p>
         </li>
-        <li>
+        <li class="current">
           <strong>Stage 2.3: Physical x86_64 desktop PCs / laptops</strong>
-          <span class="status todo">Planned</span>
+          <span class="status doing"> IN PROGRESS </span>
           <p>Enable and validate Kan-Linux boot and runtime support for physical x86_64 desktop PCs / laptops.</p>
         </li>
         <li>
@@ -800,7 +603,7 @@ section {
         </p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="https://github.com/kan-linux/kan" target="_blank" rel="noopener">Contribute on GitHub</a>
-          <a class="btn btn-ghost" href="https://github.com/kan-linux/kan/releases/tag/v0.2.7" target="_blank" rel="noopener">Screenshots &amp; LiveISO</a>
+          <a class="btn btn-ghost" href="https://github.com/kan-linux/kan/releases/tag/v0.2.8" target="_blank" rel="noopener">Screenshots &amp; LiveISO</a>
         </div>
       </div>
     </div>
