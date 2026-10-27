@@ -12,12 +12,14 @@
 #
 # Conventions (convention over configuration - the script never prompts):
 #   - Must run as root; otherwise it prints an error and exits.
-#   - Default target is firefox. LiveISO disks are small, so get the browser
-#     first; 'all' also installs firefox first, then go, rust, mimocode.
+#   - Default target is all: install all four (firefox first, then go, rust,
+#     mimocode). Firefox ships preinstalled and is skipped unless --force.
 #   - If an install directory already exists it is removed first, then the
 #     tarball is downloaded (frees disk before the download). No confirmation.
 #   - Exception: Firefox ships preinstalled with the OS and is never replaced
 #     unless --force is given.
+#   - Free space is checked before any download: about 10G must be free on the
+#     /opt filesystem, otherwise the run refuses up front.
 #   - All deletions go through safe_rm_rf: empty/relative/..// paths and
 #     anything outside the /opt tool roots + this run's scratch dir are
 #     refused outright (a root rm -rf must never touch the system).
@@ -56,9 +58,9 @@ exception: it is preinstalled with the OS and is left untouched unless
 
   go        Install the Go toolchain to /opt/go
   rust      Install the Rust toolchain to /opt/rust
-  firefox   Install Firefox to /opt/firefox (default - liveiso disks are small)
+  firefox   Install Firefox to /opt/firefox
   mimocode  Install MiMoCode to /opt/mimocode
-  all       Install all four (firefox first, then go, rust, mimocode)
+  all       Install all four (firefox first, then go, rust, mimocode) (default)
 
 Options:
   --version <ver>   Go: release version, e.g. 1.27.2
@@ -92,6 +94,23 @@ require_root() {
         echo "[install-prebuilts] ERROR: must run as root (e.g. sudo $0 ...)" >&2
         exit 1
     fi
+}
+
+# Free-space preflight, enforced before any download starts. Tarballs plus
+# extracted trees peak around 10G for a full run; refuse up front instead of
+# filling the disk mid-install. Checked on the /opt filesystem (installs land
+# there; the /tmp scratch tarballs usually share the same fs).
+require_free_space() {
+    local need_kb=$((10 * 1024 * 1024))
+    local avail_kb
+    avail_kb=$(df -Pk /opt 2>/dev/null | awk 'NR == 2 { print $4 }' || true)
+    case "${avail_kb}" in
+        ''|*[!0-9]*) die "cannot determine free disk space for /opt" ;;
+    esac
+    if [ "${avail_kb}" -lt "${need_kb}" ]; then
+        die "not enough free disk space on /opt: $((avail_kb / 1024)) MiB free, need about $((need_kb / 1024)) MiB"
+    fi
+    log "free space ok: $((avail_kb / 1024)) MiB free on /opt (need about 10G)"
 }
 
 # Remove an existing install dir before a fresh install. Convention over
@@ -493,9 +512,13 @@ main() {
         shift
     done
 
-    # Default: firefox first - liveiso disks are small and the browser is the
-    # highest-value prebuilt.
-    [ -n "$target" ] || target="firefox"
+    # Default: install all four. Firefox is skipped when preinstalled (no
+    # --force), so a no-arg run still installs go/rust/mimocode instead of
+    # exiting on the Firefox presence check.
+    [ -n "$target" ] || target="all"
+
+    # Preflight before any download/install begins.
+    require_free_space
 
     case "$target" in
         go)       install_go "$go_version" ;;
