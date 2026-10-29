@@ -1,6 +1,6 @@
 #!/bin/bash
-# install-prebuilts.sh - download and install the Go, Rust, Firefox and
-# MiMoCode official-binary prebuilts.
+# install-prebuilts.sh - download and install the Go, Rust, Firefox,
+# MiMoCode and LunarG Vulkan SDK official-binary prebuilts.
 #
 # Runs as root on a kanlinux system (VM or bare metal), either manually by
 # the user or by the built-in agent. x86_64 Linux only. Toolchains/apps come
@@ -9,11 +9,15 @@
 # PATH afterwards, e.g. in ~/.bashrc:
 #
 #   export PATH="/opt/go/bin:/opt/rust/rustc/bin:/opt/rust/cargo/bin:/opt/firefox:/opt/mimocode/bin:$PATH"
+#   # Vulkan SDK (or: source /opt/vulkan/setup-env.sh)
+#   export PATH="/opt/vulkan/bin:$PATH"
+#   export VULKAN_SDK=/opt/vulkan
 #
 # Conventions (convention over configuration - the script never prompts):
 #   - Must run as root; otherwise it prints an error and exits.
-#   - Default target is all: install all four (firefox first, then go, rust,
-#     mimocode). Firefox ships preinstalled and is skipped unless --force.
+#   - Default target is all: install all five (firefox first, then go, rust,
+#     mimocode, vulkan). Firefox ships preinstalled and is skipped unless
+#     --force.
 #   - If an install directory already exists it is removed first, then the
 #     tarball is downloaded (frees disk before the download). No confirmation.
 #   - Exception: Firefox ships preinstalled with the OS and is never replaced
@@ -25,48 +29,53 @@
 #     refused outright (a root rm -rf must never touch the system).
 #
 # Official distribution URLs only (go.dev, static.rust-lang.org,
-# download-installer.cdn.mozilla.net, github.com/XiaomiMiMo/MiMo-Code).
-# No third-party mirrors.
+# download-installer.cdn.mozilla.net, github.com/XiaomiMiMo/MiMo-Code,
+# sdk.lunarg.com). No third-party mirrors.
 set -euo pipefail
 
 GO_DEFAULT_VERSION=1.27.2
 RUST_DEFAULT_VERSION=1.99.1
 FIREFOX_DEFAULT_VERSION=158.0.1
 MIMOCODE_DEFAULT_VERSION=0.1.16
+VULKAN_DEFAULT_VERSION=1.4.321.0
 GO_ROOT=/opt/go
 RUST_ROOT=/opt/rust
 FIREFOX_ROOT=/opt/firefox
 MIMOCODE_ROOT=/opt/mimocode
+VULKAN_ROOT=/opt/vulkan
 # kan-linux is x86_64-only; keep these in sync with the distro target.
 GO_TARBALL_OS_ARCH=linux-amd64
 RUST_TARBALL_TRIPLE=x86_64-unknown-linux-gnu
 FIREFOX_TARBALL_OS_ARCH=linux-x86_64
 FIREFOX_LOCALE=en-US
+VULKAN_TARBALL_OS_ARCH=linux-x86_64
 
 log()  { echo "[install-prebuilts] $*"; }
 die()  { echo "[install-prebuilts] ERROR: $*" >&2; exit 1; }
 
 usage() {
     cat <<'EOF'
-Usage: install-prebuilts.sh [go|rust|firefox|mimocode|all] [--version <ver>] [--force]
+Usage: install-prebuilts.sh [go|rust|firefox|mimocode|vulkan|all] [--version <ver>] [--force]
 
-Download and install the Go and/or Rust toolchains, Firefox and MiMoCode to /opt.
-Must run as root. An existing install directory is removed first, then the
-new tarball is downloaded - no confirmation is asked. Firefox is the
-exception: it is preinstalled with the OS and is left untouched unless
---force is given.
+Download and install the Go and/or Rust toolchains, Firefox, MiMoCode and
+the LunarG Vulkan SDK to /opt. Must run as root. An existing install
+directory is removed first, then the new tarball is downloaded - no
+confirmation is asked. Firefox is the exception: it is preinstalled with
+the OS and is left untouched unless --force is given.
 
-  go        Install the Go toolchain to /opt/go
-  rust      Install the Rust toolchain to /opt/rust
-  firefox   Install Firefox to /opt/firefox
-  mimocode  Install MiMoCode to /opt/mimocode
-  all       Install all four (firefox first, then go, rust, mimocode) (default)
+  go       Install the Go toolchain to /opt/go
+  rust     Install the Rust toolchain to /opt/rust
+  firefox  Install Firefox to /opt/firefox
+  mimocode Install MiMoCode to /opt/mimocode
+  vulkan   Install the LunarG Vulkan SDK to /opt/vulkan
+  all      Install all five (firefox first, then go, rust, mimocode, vulkan) (default)
 
 Options:
   --version <ver>   Go: release version, e.g. 1.27.2
                     Rust: release version, e.g. 1.99.1
                     Firefox: release version, e.g. 158.0.1
                     MiMoCode: release version, e.g. 0.1.16
+                    Vulkan SDK: release version, e.g. 1.4.321.0
                     With 'all', applies to the toolchain named just before it;
                     otherwise use separate invocations.
   --force           Replace an existing Firefox install (the only target
@@ -75,6 +84,11 @@ Options:
 After installation add the toolchains to your PATH:
 
   export PATH="/opt/go/bin:/opt/rust/rustc/bin:/opt/rust/cargo/bin:/opt/firefox:/opt/mimocode/bin:$PATH"
+  # Vulkan SDK (or source /opt/vulkan/setup-env.sh):
+  export PATH="/opt/vulkan/bin:$PATH"
+  export VULKAN_SDK=/opt/vulkan
+  export LD_LIBRARY_PATH="/opt/vulkan/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+  export VK_LAYER_PATH="/opt/vulkan/etc/vulkan/explicit_layer.d"
 
 Examples:
   install-prebuilts.sh
@@ -82,6 +96,7 @@ Examples:
   install-prebuilts.sh go --version 1.27.2
   install-prebuilts.sh rust --version 1.99.1
   install-prebuilts.sh mimocode --version 0.1.16
+  install-prebuilts.sh vulkan --version 1.4.321.0
 EOF
 }
 
@@ -153,7 +168,7 @@ safe_rm_rf() {
     # SCRATCH_ROOT is matched only when it has been initialized, so an empty
     # variable can never turn "${SCRATCH_ROOT}"/* into a bare /* pattern.
     case "${target}" in
-        "${GO_ROOT}"|"${RUST_ROOT}"|"${FIREFOX_ROOT}"|"${MIMOCODE_ROOT}")
+        "${GO_ROOT}"|"${RUST_ROOT}"|"${FIREFOX_ROOT}"|"${MIMOCODE_ROOT}"|"${VULKAN_ROOT}")
             ;;
         *)
             [ -n "${SCRATCH_ROOT}" ] || die "safe_rm_rf: refusing path outside allowlist: ${target}"
@@ -469,12 +484,60 @@ install_mimocode() {
     log "launcher symlinked: /usr/local/bin/mimo"
 }
 
+# LunarG Vulkan SDK: official sdk.lunarg.com tarball. Unpacks to
+# <version>/<arch>/ with setup-env.sh, bin/, lib/, include/, etc/.
+# Installed to /opt/vulkan (the <arch>/ level) so setup-env.sh and
+# VULKAN_SDK=/opt/vulkan work as upstream documents.
+install_vulkan() {
+    local version="$1"
+    local tmp tarball url arch_dir
+
+    # Accept "1.4.321.0" or "vulkan-1.4.321.0" or "vulkansdk-1.4.321.0".
+    version="${version#vulkan-}"
+    version="${version#vulkansdk-}"
+    version="${version#v}"
+    [ -n "${version}" ] || die "Vulkan SDK version must not be empty"
+
+    replace_dir "${VULKAN_ROOT}"
+
+    tarball="vulkansdk-linux-x86_64-${version}.tar.xz"
+    url="https://sdk.lunarg.com/sdk/download/${version}/linux/${tarball}"
+    tmp="$(scratch_dir vulkan)"
+
+    log "Downloading Vulkan SDK ${version} from ${url}"
+    fetch "$url" "${tmp}/${tarball}"
+
+    log "Installing Vulkan SDK to ${VULKAN_ROOT}"
+    # Tarball layout: <version>/x86_64/{bin,lib,include,setup-env.sh,...}
+    mkdir -p "${VULKAN_ROOT}"
+    tar -C "${tmp}" -xJf "${tmp}/${tarball}"
+    arch_dir="${tmp}/${version}/${VULKAN_TARBALL_OS_ARCH#linux-}"
+    # Fallback: some builds use a "x86_64" dir; also accept the single child dir.
+    if [ ! -d "${arch_dir}" ]; then
+        arch_dir="$(find "${tmp}" -mindepth 2 -maxdepth 2 -type d \( -name x86_64 -o -name amd64 \) | head -1)"
+    fi
+    [ -d "${arch_dir}" ] || die "Vulkan SDK layout unexpected: no x86_64 dir under ${tmp}/${version}"
+
+    # Move the arch tree contents into /opt/vulkan (strip the <ver>/<arch> wrapper).
+    cp -a "${arch_dir}/." "${VULKAN_ROOT}/"
+    rm -rf "${tmp}/${version}" "${tmp}/${tarball}"
+
+    [ -x "${VULKAN_ROOT}/bin/vulkaninfo" ] || [ -f "${VULKAN_ROOT}/setup-env.sh" ] \
+        || die "Vulkan SDK install failed: neither vulkaninfo nor setup-env.sh at ${VULKAN_ROOT}"
+    log "Vulkan SDK installed: ${VULKAN_ROOT}"
+    if [ -x "${VULKAN_ROOT}/bin/vulkaninfo" ]; then
+        log "vulkaninfo: ${VULKAN_ROOT}/bin/vulkaninfo"
+    fi
+    log "source ${VULKAN_ROOT}/setup-env.sh  (or set VULKAN_SDK=${VULKAN_ROOT})"
+}
+
 main() {
     local target=""
     local go_version="$GO_DEFAULT_VERSION"
     local rust_version="$RUST_DEFAULT_VERSION"
     local firefox_version="$FIREFOX_DEFAULT_VERSION"
     local mimocode_version="$MIMOCODE_DEFAULT_VERSION"
+    local vulkan_version="$VULKAN_DEFAULT_VERSION"
     local last_target=""
     FORCE=0
 
@@ -484,7 +547,7 @@ main() {
 
     while [ $# -gt 0 ]; do
         case "$1" in
-            go|rust|firefox|mimocode|all)
+            go|rust|firefox|mimocode|vulkan|all)
                 target="$1"
                 last_target="$1"
                 ;;
@@ -498,6 +561,7 @@ main() {
                     rust)      rust_version="${1#rust-}" ;;
                     firefox)   firefox_version="${1#firefox-}" ;;
                     mimocode)  mimocode_version="${1#mimocode-}" ;;
+                    vulkan)    vulkan_version="${1#vulkan-}"; vulkan_version="${vulkan_version#v}" ;;
                     *)         go_version="${1#go}" ;;
                 esac
                 ;;
@@ -512,8 +576,8 @@ main() {
         shift
     done
 
-    # Default: install all four. Firefox is skipped when preinstalled (no
-    # --force), so a no-arg run still installs go/rust/mimocode instead of
+    # Default: install all. Firefox is skipped when preinstalled (no
+    # --force), so a no-arg run still installs the rest instead of
     # exiting on the Firefox presence check.
     [ -n "$target" ] || target="all"
 
@@ -525,11 +589,13 @@ main() {
         rust)     install_rust "$rust_version" ;;
         firefox)  download_setup_firefox "$firefox_version" ;;
         mimocode) install_mimocode "$mimocode_version" ;;
+        vulkan)   install_vulkan "$vulkan_version" ;;
         all)
             download_setup_firefox "$firefox_version"
             install_go "$go_version"
             install_rust "$rust_version"
             install_mimocode "$mimocode_version"
+            install_vulkan "$vulkan_version"
             ;;
     esac
 
@@ -538,6 +604,11 @@ main() {
 Done. Add the toolchains to your PATH (for example in ~/.bashrc):
 
   export PATH="/opt/go/bin:/opt/rust/rustc/bin:/opt/rust/cargo/bin:/opt/firefox:/opt/mimocode/bin:$PATH"
+  # Vulkan SDK (or: source /opt/vulkan/setup-env.sh)
+  export PATH="/opt/vulkan/bin:$PATH"
+  export VULKAN_SDK=/opt/vulkan
+  export LD_LIBRARY_PATH="/opt/vulkan/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+  export VK_LAYER_PATH="/opt/vulkan/etc/vulkan/explicit_layer.d"
 EOF
 }
 
