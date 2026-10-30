@@ -5,13 +5,9 @@
 # Runs as root on a kanlinux system (VM or bare metal), either manually by
 # the user or by the built-in agent. x86_64 Linux only. Toolchains/apps come
 # from the official release tarballs and are installed under /opt so they
-# stay out of the system package manager. Add the bin directories to your
-# PATH afterwards, e.g. in ~/.bashrc:
-#
-#   export PATH="/opt/go/bin:/opt/rust/rustc/bin:/opt/rust/cargo/bin:/opt/firefox:/opt/mimocode/bin:$PATH"
-#   # Vulkan SDK (or: source /opt/vulkan/setup-env.sh)
-#   export PATH="/opt/vulkan/bin:$PATH"
-#   export VULKAN_SDK=/opt/vulkan
+# stay separate from the base system. PATH is a rootfs convention
+# (already includes /opt/go/bin, /opt/rust/*, /opt/vulkan/bin), so no
+# environment setup is needed after install.
 #
 # Conventions (convention over configuration - the script never prompts):
 #   - Must run as root; otherwise it prints an error and exits.
@@ -81,14 +77,7 @@ Options:
   --force           Replace an existing Firefox install (the only target
                     where an existing directory is not removed by default)
 
-After installation add the toolchains to your PATH:
-
-  export PATH="/opt/go/bin:/opt/rust/rustc/bin:/opt/rust/cargo/bin:/opt/firefox:/opt/mimocode/bin:$PATH"
-  # Vulkan SDK (or source /opt/vulkan/setup-env.sh):
-  export PATH="/opt/vulkan/bin:$PATH"
-  export VULKAN_SDK=/opt/vulkan
-  export LD_LIBRARY_PATH="/opt/vulkan/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
-  export VK_LAYER_PATH="/opt/vulkan/etc/vulkan/explicit_layer.d"
+Toolchains are already on PATH (rootfs default).
 
 Examples:
   install-prebuilts.sh
@@ -485,9 +474,9 @@ install_mimocode() {
 }
 
 # LunarG Vulkan SDK: official sdk.lunarg.com tarball. Unpacks to
-# <version>/<arch>/ with setup-env.sh, bin/, lib/, include/, etc/.
-# Installed to /opt/vulkan (the <arch>/ level) so setup-env.sh and
-# VULKAN_SDK=/opt/vulkan work as upstream documents.
+# <version>/<arch>/ with bin/, include/, lib/, share/ (validation layers
+# in share/vulkan/explicit_layer.d). Installed to /opt/vulkan (the <arch>/
+# level) as developer tooling; the Vulkan runtime is the system's own.
 install_vulkan() {
     local version="$1"
     local tmp tarball url arch_dir
@@ -508,7 +497,7 @@ install_vulkan() {
     fetch "$url" "${tmp}/${tarball}"
 
     log "Installing Vulkan SDK to ${VULKAN_ROOT}"
-    # Tarball layout: <version>/x86_64/{bin,lib,include,setup-env.sh,...}
+    # Tarball layout: <version>/x86_64/{bin,include,lib,share}
     mkdir -p "${VULKAN_ROOT}"
     tar -C "${tmp}" -xJf "${tmp}/${tarball}"
     arch_dir="${tmp}/${version}/${VULKAN_TARBALL_OS_ARCH#linux-}"
@@ -522,13 +511,10 @@ install_vulkan() {
     cp -a "${arch_dir}/." "${VULKAN_ROOT}/"
     rm -rf "${tmp}/${version}" "${tmp}/${tarball}"
 
-    [ -x "${VULKAN_ROOT}/bin/vulkaninfo" ] || [ -f "${VULKAN_ROOT}/setup-env.sh" ] \
-        || die "Vulkan SDK install failed: neither vulkaninfo nor setup-env.sh at ${VULKAN_ROOT}"
+    [ -x "${VULKAN_ROOT}/bin/vulkaninfo" ] \
+        || die "Vulkan SDK install failed: ${VULKAN_ROOT}/bin/vulkaninfo not found"
     log "Vulkan SDK installed: ${VULKAN_ROOT}"
-    if [ -x "${VULKAN_ROOT}/bin/vulkaninfo" ]; then
-        log "vulkaninfo: ${VULKAN_ROOT}/bin/vulkaninfo"
-    fi
-    log "source ${VULKAN_ROOT}/setup-env.sh  (or set VULKAN_SDK=${VULKAN_ROOT})"
+    log "vulkaninfo: ${VULKAN_ROOT}/bin/vulkaninfo"
 }
 
 main() {
@@ -601,14 +587,8 @@ main() {
 
     cat <<'EOF'
 
-Done. Add the toolchains to your PATH (for example in ~/.bashrc):
+Done. Toolchains are already on PATH (rootfs default).
 
-  export PATH="/opt/go/bin:/opt/rust/rustc/bin:/opt/rust/cargo/bin:/opt/firefox:/opt/mimocode/bin:$PATH"
-  # Vulkan SDK (or: source /opt/vulkan/setup-env.sh)
-  export PATH="/opt/vulkan/bin:$PATH"
-  export VULKAN_SDK=/opt/vulkan
-  export LD_LIBRARY_PATH="/opt/vulkan/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
-  export VK_LAYER_PATH="/opt/vulkan/etc/vulkan/explicit_layer.d"
 EOF
 }
 
