@@ -4,23 +4,27 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Kan-Linux — a Simplicity, Source-built, Agent-First Linux distro for programmers, AI researchers and distro builders.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0d1117">
 <title>Kan-Linux — Simplicity, Source-built, Agent-First Linux</title>
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <style>
 :root {
   --bg: #0d1117;
-  --bg-soft: #131a24;
+  --bg-soft: #121924;
   --bg-card: #161d29;
   --border: #243041;
-  --text: #e8eef6;
-  --muted: #9aa8b8;
+  --text: #e9eef5;
+  --muted: #96a4b4;
+  --faint: #6c7a8a;
   --accent: #f0782c;
-  --accent-soft: rgba(240, 120, 44, 0.14);
+  --accent-soft: rgba(240, 120, 44, 0.13);
   --ok: #3dd68c;
-  --radius: 14px;
-  --max: 860px;
+  --radius: 12px;
+  --max: 820px;
   --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
           "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
 }
 
 * { box-sizing: border-box; }
@@ -33,7 +37,7 @@ body {
   color: var(--text);
   font-family: var(--font);
   font-size: 16px;
-  line-height: 1.65;
+  line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
@@ -55,81 +59,93 @@ img {
   margin: 0 auto;
 }
 
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0.75rem;
+  background: var(--accent);
+  color: #1a0f06;
+  padding: 0.5rem 0.9rem;
+  border-radius: 8px;
+  font-weight: 600;
+  z-index: 100;
+}
+.skip-link:focus { left: 0.75rem; text-decoration: none; }
+
 /* ---------- header ---------- */
 .site-header {
   position: sticky;
   top: 0;
   z-index: 50;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  background: rgba(13, 17, 23, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  background: rgba(13, 17, 23, 0.8);
   border-bottom: 1px solid rgba(36, 48, 65, 0.7);
 }
 
 .nav {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.85rem 0;
+  gap: 1.25rem;
+  padding: 0.8rem 0;
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.55rem;
   color: var(--text);
   font-weight: 700;
   letter-spacing: 0.01em;
   text-decoration: none;
-  min-width: 0;
 }
 .brand:hover { text-decoration: none; }
 
 .brand-mark {
-  width: 2rem;
-  height: 2rem;
-  border-radius: 8px;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 6px;
   object-fit: cover;
   object-position: left center;
-  flex-shrink: 0;
   background: var(--bg-soft);
 }
 
 .brand-name {
-  font-size: 1.05rem;
+  font-size: 0.98rem;
   white-space: nowrap;
 }
 
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 1.15rem;
+  gap: 1.25rem;
   list-style: none;
-  margin: 0;
+  margin: 0 0 0 auto;
   padding: 0;
 }
 
 .nav-links a {
   color: var(--muted);
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   text-decoration: none;
 }
 .nav-links a:hover { color: var(--text); }
 
+/* ---------- buttons ---------- */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.45rem;
   padding: 0.62rem 1.15rem;
-  border-radius: 999px;
+  border-radius: 10px;
   font-size: 0.92rem;
   font-weight: 600;
   text-decoration: none;
   border: 1px solid transparent;
   transition: transform .15s ease, background .15s ease, border-color .15s ease;
   white-space: nowrap;
+  cursor: pointer;
 }
 .btn:hover {
   text-decoration: none;
@@ -152,446 +168,255 @@ img {
 
 /* ---------- hero ---------- */
 .hero {
-  padding: 2.75rem 0 1.5rem;
-  text-align: center;
-}
-
-.hero-banner {
-  width: min(720px, 100%);
-  margin: 0 auto 1.5rem;
-  border-radius: var(--radius);
-  overflow: hidden;
-  background: var(--bg-soft);
-  border: 1px solid var(--border);
-}
-.hero-banner img {
-  width: 100%;
-  height: auto;
-}
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.35rem 0.85rem;
-  border-radius: 999px;
-  background: var(--accent-soft);
-  color: var(--accent);
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  margin-bottom: 1rem;
-}
-.badge::before {
-  content: "";
-  width: 0.45rem;
-  height: 0.45rem;
-  border-radius: 50%;
-  background: var(--ok);
-  box-shadow: 0 0 0 3px rgba(61, 214, 140, 0.18);
+  padding: 4.25rem 0 3.25rem;
 }
 
 .hero h1 {
-  margin: 0 0 0.85rem;
-  font-size: clamp(1.65rem, 5vw, 2.45rem);
-  line-height: 1.25;
-  letter-spacing: -0.02em;
-  font-weight: 750;
+  margin: 0 0 0.9rem;
+  font-size: clamp(2.1rem, 6vw, 3.15rem);
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  font-weight: 760;
+  max-width: 16em;
 }
 .hero h1 .accent { color: var(--accent); }
 
-.lead {
-  margin: 0 auto 1.6rem;
-  max-width: 40rem;
+.slogan {
+  margin: 0 0 1.15rem;
+  font-size: clamp(1.05rem, 2.6vw, 1.3rem);
   color: var(--muted);
-  font-size: clamp(1rem, 2.6vw, 1.125rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
 }
+
+.lead {
+  margin: 0 0 1.9rem;
+  max-width: 36rem;
+  color: var(--muted);
+  font-size: 1.02rem;
+}
+.lead b { color: var(--text); font-weight: 650; }
 
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
-  justify-content: center;
-}
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.75rem;
-  margin: 2.25rem auto 0;
-  max-width: 36rem;
-}
-
-.stat {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 0.9rem 0.5rem;
-}
-.stat b {
-  display: block;
-  color: var(--accent);
-  font-size: 1.15rem;
-  line-height: 1.2;
-}
-.stat span {
-  color: var(--muted);
-  font-size: 0.78rem;
+  gap: 0.7rem;
 }
 
 /* ---------- sections ---------- */
 section {
-  padding: 2.25rem 0;
+  padding: 3rem 0;
+  border-top: 1px solid var(--border);
 }
 
 .section-title {
-  margin: 0 0 0.45rem;
-  font-size: clamp(1.35rem, 3.5vw, 1.75rem);
-  letter-spacing: -0.015em;
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.3rem, 3.2vw, 1.6rem);
+  letter-spacing: -0.02em;
 }
 
 .section-sub {
-  margin: 0 0 1.5rem;
+  margin: 0 0 1.65rem;
   color: var(--muted);
-  max-width: 42rem;
+  max-width: 38rem;
+  font-size: 0.98rem;
 }
 
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.9rem;
+/* ---------- news ---------- */
+.news-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1.25rem 1.3rem;
+.news-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 1.15rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid rgba(36, 48, 65, 0.55);
 }
-.card h3 {
-  margin: 0 0 0.45rem;
-  font-size: 1.05rem;
+.news-list li:first-child { padding-top: 0; }
+.news-list li:last-child { border-bottom: none; padding-bottom: 0; }
+
+.news-date {
+  flex: 0 0 auto;
+  width: 7.4rem;
+  color: var(--faint);
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  letter-spacing: -0.01em;
+}
+
+.news-list a {
+  color: var(--text);
+  font-size: 0.98rem;
+  font-weight: 550;
+}
+.news-list a:hover { color: var(--accent); }
+
+.news-more {
+  margin: 1.35rem 0 0;
+  font-size: 0.9rem;
+}
+
+/* ---------- docs ---------- */
+.docs-row {
   display: flex;
   align-items: center;
-  gap: 0.55rem;
-}
-.card h3 .dot {
-  width: 0.55rem;
-  height: 0.55rem;
-  border-radius: 50%;
-  background: var(--accent);
-  flex-shrink: 0;
-}
-.card p {
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.95rem;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
 }
 
-/* principle list */
-.principles {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 0.85rem;
-}
-.principles li {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--accent);
-  border-radius: 12px;
-  padding: 1.1rem 1.25rem;
-}
-.principles strong {
-  display: block;
-  margin-bottom: 0.25rem;
-  font-size: 1.02rem;
-}
-.principles p {
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.95rem;
-}
+.docs-row .section-sub { margin: 0; }
 
-/* two-column compare */
-.compare {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.9rem;
-}
-.compare-col {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1.25rem 1.3rem;
-}
-.compare-col h3 {
-  margin: 0 0 0.75rem;
-  font-size: 1.02rem;
-  color: var(--muted);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-size: 0.78rem;
-}
-.compare-col.hot {
-  border-color: rgba(240, 120, 44, 0.45);
-  background: linear-gradient(180deg, rgba(240, 120, 44, 0.08), var(--bg-card));
-}
-.compare-col.hot h3 { color: var(--accent); }
-.compare-col ul {
-  margin: 0;
-  padding-left: 1.15rem;
-  color: var(--muted);
-  font-size: 0.95rem;
-}
-.compare-col li { margin-bottom: 0.45rem; }
-
-/* roadmap */
-.roadmap {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  position: relative;
-}
-.roadmap::before {
-  content: "";
-  position: absolute;
-  left: 0.55rem;
-  top: 0.4rem;
-  bottom: 0.4rem;
-  width: 2px;
-  background: var(--border);
-}
-.roadmap li {
-  position: relative;
-  padding: 0 0 1.15rem 1.85rem;
-}
-.roadmap li:last-child { padding-bottom: 0; }
-.roadmap li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.45rem;
-  width: 0.75rem;
-  height: 0.75rem;
-  border-radius: 50%;
-  background: var(--bg);
-  border: 2px solid var(--border);
-}
-.roadmap li.done::before {
-  background: var(--ok);
-  border-color: var(--ok);
-  box-shadow: 0 0 0 3px rgba(61, 214, 140, 0.15);
-}
-.roadmap li.current::before {
-  background: var(--accent);
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(240, 120, 44, 0.18);
-}
-.roadmap .status {
-  display: inline-block;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  padding: 0.15rem 0.55rem;
-  border-radius: 999px;
-  margin-left: 0.45rem;
-  vertical-align: middle;
-}
-.roadmap .status.done {
-  background: rgba(61, 214, 140, 0.15);
-  color: var(--ok);
-}
-.roadmap .status.doing {
-  background: var(--accent-soft);
-  color: var(--accent);
-}
-.roadmap .status.todo {
-  background: rgba(154, 168, 184, 0.12);
-  color: var(--muted);
-}
-.roadmap p {
-  margin: 0.25rem 0 0;
-  color: var(--muted);
-  font-size: 0.93rem;
-}
-
-/* cta */
+/* ---------- cta ---------- */
 .cta {
   background:
-    radial-gradient(1000px 320px at 50% -20%, rgba(240, 120, 44, 0.18), transparent 70%),
+    radial-gradient(900px 300px at 15% -30%, rgba(240, 120, 44, 0.16), transparent 70%),
     var(--bg-soft);
   border: 1px solid var(--border);
   border-radius: calc(var(--radius) + 4px);
-  padding: 2.25rem 1.5rem;
-  text-align: center;
+  padding: 2.35rem 2rem;
 }
 .cta h2 {
   margin: 0 0 0.55rem;
-  font-size: clamp(1.35rem, 3.5vw, 1.8rem);
+  font-size: clamp(1.35rem, 3.2vw, 1.7rem);
+  letter-spacing: -0.02em;
 }
 .cta p {
-  margin: 0 auto 1.35rem;
+  margin: 0 0 1.35rem;
   color: var(--muted);
-  max-width: 32rem;
+  max-width: 34rem;
+  font-size: 0.98rem;
 }
-.cta .hero-actions { justify-content: center; }
+.cta .hero-actions { margin: 0; }
 
-/* footer */
+/* ---------- footer ---------- */
 .site-footer {
-  margin-top: 1.5rem;
-  padding: 1.75rem 0 2.5rem;
-  color: var(--muted);
-  font-size: 0.88rem;
+  padding: 2.25rem 0 2.75rem;
+  color: var(--faint);
+  font-size: 0.82rem;
+  border-top: 1px solid var(--border);
 }
 .site-footer a { color: var(--muted); }
 .site-footer a:hover { color: var(--accent); }
-.footer-note {
-  border-top: 1px solid var(--border);
-  padding-top: 1.15rem;
-  font-size: 0.82rem;
-  color: #6f7d8c;
-}
 .footer-note p { margin: 0.35rem 0; }
 
 /* ---------- responsive ---------- */
-@media (max-width: 720px) {
+@media (max-width: 640px) {
   .wrap { width: min(var(--max), calc(100% - 1.75rem)); }
 
-  .nav-links { display: none; }
+  .nav { gap: 0.85rem; }
+  .nav-links { gap: 0.95rem; }
 
-  .hero { padding: 1.75rem 0 0.75rem; }
+  .hero { padding: 2.65rem 0 2.25rem; }
 
-  .stats { grid-template-columns: repeat(3, 1fr); gap: 0.55rem; }
-  .stat { padding: 0.75rem 0.35rem; }
-  .stat b { font-size: 1rem; }
-  .stat span { font-size: 0.72rem; }
-
-  .card-grid,
-  .compare {
-    grid-template-columns: 1fr;
+  .news-list li {
+    flex-direction: column;
+    gap: 0.2rem;
+    align-items: flex-start;
   }
+  .news-date { width: auto; }
 
-  section { padding: 1.75rem 0; }
+  section { padding: 2.25rem 0; }
 
-  .cta { padding: 1.75rem 1.15rem; }
+  .cta { padding: 1.85rem 1.35rem; }
 
   .hero-actions .btn { width: 100%; }
   .hero-actions { flex-direction: column; }
-}
-
-@media (max-width: 420px) {
-  .brand-name { font-size: 0.98rem; }
-  .btn { padding: 0.58rem 0.95rem; font-size: 0.88rem; }
-  .stats { grid-template-columns: 1fr 1fr 1fr; }
+  .cta .hero-actions { flex-direction: column; }
 }
 </style>
 </head>
 <body>
 
+<a class="skip-link" href="#main">Skip to content</a>
+
 <header class="site-header">
   <div class="wrap nav">
     <a class="brand" href="#top" aria-label="Kan-Linux home">
-      <img class="brand-mark" src="assets/kanlinux-mark.png" alt="Kan-Linux logo">
+      <img class="brand-mark" src="assets/kanlinux-mark.png" alt="">
       <span class="brand-name">Kan-Linux</span>
     </a>
+    <ul class="nav-links">
+      <li><a href="#news">News</a></li>
+      <li><a href="https://github.com/kan-linux/kan/wiki" target="_blank" rel="noopener">Wiki</a></li>
+    </ul>
+    <a class="btn btn-ghost" href="https://github.com/kan-linux/kan" target="_blank" rel="noopener">GitHub</a>
   </div>
 </header>
 
-<main id="top">
+<main id="main">
 
   <!-- Hero -->
-  <section class="hero">
+  <section class="hero" id="top" style="border-top: none;">
     <div class="wrap">
       <h1>
-          <span class="accent">Concise</span>, Source-built, Secure and Agent-first Linux distro at the edge
+        Concise, Source-built, Secure and
+        <span class="accent">Agent-first</span> Linux distro at the edge
       </h1>
 
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="https://github.com/kan-linux/kan/releases/tag/v0.3.1" target="_blank" rel="noopener">Screenshots and LiveISO</a>
-        <a class="btn btn-ghost" href="https://github.com/kan-linux/kan" target="_blank" rel="noopener">View Source on Github</a>
-      </div>
 
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="https://github.com/kan-linux/kan/releases/tag/v0.3.1" target="_blank" rel="noopener">Download v0.3.1</a>
+      </div>
     </div>
   </section>
 
-  <!-- Roadmap -->
-  <section id="roadmap">
+  <!-- News -->
+  <section id="news">
     <div class="wrap">
-      <h2 class="section-title">Roadmap</h2>
-      <p class="section-sub">From QEMU PoC to bare-metal self-hosting and desktop-native AI agents.</p>
+      <h2 class="section-title">News</h2>
+      <p class="section-sub">Latest releases.</p>
 
-      <ol class="roadmap">
-        <li class="done">
-          <strong>Stage 1: PoC validation</strong>
-          <span class="status done">Done</span>
-          <p>
-            Complete <a href="https://github.com/kan-linux/kan/releases/tag/v0.2.6" target="_blank" rel="noopener">PoC validation</a>
-            of Kan-Linux via QEMU virtual machine.
-          </p>
-        </li>
-
-        <li class="done">
-          <strong>Stage 2.1: Omarchy shell in QEMU</strong>
-          <span class="status done">Done</span>
-          <p>
-            Integrate a preliminary, feature-limited,
-            <a href="https://github.com/kan-linux/omarchy/tree/kan" target="_blank" rel="noopener">customized Omarchy desktop shell</a>
-            and login greeter for QEMU virtual machine environments.
-          </p>
-        </li>
-
-        <li class="done">
-          <strong>Stage 2.2: Installer</strong>
-          <span class="status done"> DONE </span>
-          <p>Enable and validate Kan-Linux installer via QEMU virtual machine</p>
-        </li>
-
-        <li class="done">
-          <strong>Stage 2.3: Refine and stabilize --- 1st </strong>
-          <span class="status done"> DONE </span>
-          <p>Refine and stabilize via QEMU virtual machine</p>
-        </li>
-
-
-        <li class="done">
-          <strong>Stage 2.4: Bare-metal install on physical x86_64 desktop PCs & laptops</strong>
-          <span class="status done"> DONE </span>
-          <p>Enable and validate Kan-Linux boot and runtime support for physical x86_64 desktop PCs & laptops.</p>
-        </li>
-
-        <li class="done">
-          <strong>Stage 2.5: Initial support for desktop-native AI Agent</strong>
-          <span class="status done"> DONE </span>
-          <p>
-            Integrate desktop-native AI Agent in Kan-Linux on physical x86_64 hardware,
-            then fully verify desktop-native AI Agent functionality on desktop and laptop hardware.
-          </p>
-        </li>
-
-        <li class="current">
-          <strong>Milestone: Full self-hosting</strong>
-          <span class="status doing"> IN PROGRESS </span>
-          <p>
-            Kan-Linux achieves full self-hosting — all subsequent development, building and iteration
-            of Kan-Linux will happen <b>inside Kan-Linux itself</b>.
-          </p>
-        </li>
-
+      <ul class="news-list">
         <li>
-          <strong>Stage 2.6: Refine and stabilize --- 2nd </strong>
-          <span class="status todo">Planned</span>
-          <p>Refine and stabilize via physical x86_64 desktops and laptops.</p>
+          <time class="news-date" datetime="2026-11-07">2026 Nov 07</time>
+          <a href="https://github.com/kan-linux/kan/releases/tag/v0.3.1" target="_blank" rel="noopener">Kan-Linux v0.3.1 released</a>
         </li>
         <li>
-          <strong>Stage 3: AI Agent </strong>
-          <span class="status todo">Planned</span>
-          <p>Refine AI-Agent in Kan-Linux on physical x86_64 hardware.</p>
+          <time class="news-date" datetime="2026-10-31">2026 Oct 31</time>
+          <a href="https://github.com/kan-linux/kan/releases/tag/v0.3.0" target="_blank" rel="noopener">Kan-Linux v0.3.0 released</a>
         </li>
-      </ol>
+        <li>
+          <time class="news-date" datetime="2026-10-24">2026 Oct 24</time>
+          <a href="https://github.com/kan-linux/kan/releases/tag/v0.2.9" target="_blank" rel="noopener">Kan-Linux v0.2.9 released</a>
+        </li>
+        <li>
+          <time class="news-date" datetime="2026-10-17">2026 Oct 17</time>
+          <a href="https://github.com/kan-linux/kan/releases/tag/v0.2.8" target="_blank" rel="noopener">Kan-Linux v0.2.8 released</a>
+        </li>
+        <li>
+          <time class="news-date" datetime="2026-10-10">2026 Oct 10</time>
+          <a href="https://github.com/kan-linux/kan/releases/tag/v0.2.7" target="_blank" rel="noopener">Kan-Linux v0.2.7 released</a>
+        </li>
+        <li>
+          <time class="news-date" datetime="2026-10-01">2026 Oct 01</time>
+          <a href="https://github.com/kan-linux/kan/releases/tag/v0.2.6" target="_blank" rel="noopener">Kan-Linux v0.2.6 released</a>
+        </li>
+      </ul>
+
+      <p class="news-more">
+        <a href="https://github.com/kan-linux/kan/releases" target="_blank" rel="noopener">All releases →</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Docs -->
+  <section id="docs">
+    <div class="wrap">
+      <div class="docs-row">
+        <div>
+          <h2 class="section-title">Documentation</h2>
+          <p class="section-sub">
+            Download &amp; verification, installation, hardware notes, keyboard
+            shortcuts and the roadmap all live in the wiki.
+          </p>
+        </div>
+        <a class="btn btn-ghost" href="https://github.com/kan-linux/kan/wiki" target="_blank" rel="noopener">Browse the wiki →</a>
+      </div>
     </div>
   </section>
 
@@ -605,6 +430,10 @@ section {
           spirit of exploration. Contributors are encouraged to try crazy ideas, build wild
           demos, and push the edge of what’s possible.
         </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://github.com/kan-linux/kan" target="_blank" rel="noopener">Contribute on GitHub</a>
+          <a class="btn btn-ghost" href="https://github.com/kan-linux/kan/wiki" target="_blank" rel="noopener">Read the wiki</a>
+        </div>
       </div>
     </div>
   </section>
