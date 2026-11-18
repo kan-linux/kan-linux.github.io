@@ -771,6 +771,7 @@ hr {
   font-size: 0.955rem;
 }
 .callout p { margin: 0; }
+.callout p + p { margin-top: 0.55rem; }
 .callout strong { color: var(--accent-deep); }
 
 /* keyboard table */
