@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Download the Kan-Linux LiveISO, verify its integrity, and install it in a virtual machine or on real x86-64 hardware.">
+  <meta name="theme-color" content="#f4efe6">
+  <title>Download — Kan-Linux</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;520;640&family=Outfit:wght@500;640;720&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="index.html" aria-label="Kan-Linux home">
+      <img class="brand-mark" src="assets/kanlinux-mark.png" alt="">
+      <span>Kan-Linux</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="docs.html">Docs</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="https://github.com/kan-linux/kan" target="_blank" rel="noopener">GitHub</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="page-hero">
+    <div class="wrap">
+      <h1>Download &amp; Install</h1>
+    </div>
+  </section>
+
+  <div class="prose">
+    <div class="wrap docs-layout">
+      <nav class="toc" aria-label="On this page">
+        <ul>
+          <li><a href="#verify">Download &amp; integrity verification</a></li>
+          <li><a href="#vm">Run the LiveISO in a virtual machine</a></li>
+          <li><a href="#vm-install">Install Kan-Linux to a virtual disk</a></li>
+          <li><a href="#hardware">Use the LiveISO on real x86-64 laptops and PCs</a></li>
+        </ul>
+      </nav>
+
+      <div>
+        <h2 id="verify">Download &amp; integrity verification</h2>
+        <p>
+          Download the LiveISO and its SHA256 checksum from the GitHub release page.
+          The commands below use v0.3.2 as an example.
+        </p>
+
+        <pre><code>wget https://github.com/kan-linux/kan/releases/download/v0.3.2/kan-linux-0.3.2-x86_64.iso
+wget https://github.com/kan-linux/kan/releases/download/v0.3.2/kan-linux-0.3.2-x86_64.iso.sha256</code></pre>
+
+        <p>Verify the downloaded image with the SHA256 checksum:</p>
+
+        <pre><code>sha256sum -c kan-linux-0.3.2-x86_64.iso.sha256</code></pre>
+
+        <p>If the output shows <code>OK</code>, the file is intact:</p>
+
+        <pre><code>$ sha256sum -c kan-linux-0.3.2-x86_64.iso.sha256
+kan-linux-0.3.2-x86_64.iso: OK</code></pre>
+
+        <!-- ============================================================ -->
+        <h2 id="vm">Run the LiveISO in a virtual machine</h2>
+        <p>
+          You can try the LiveISO on any Linux host with
+          <a href="https://www.qemu.org/docs/master/" target="_blank" rel="noopener">QEMU</a> installed.
+        </p>
+
+        <h3>Launch the LiveISO</h3>
+
+        <pre><code>qemu-system-x86_64 -enable-kvm -cpu host -m 4G -smp 2 \
+  -cdrom kan-linux-0.3.2-x86_64.iso \
+  -device virtio-vga,xres=1920,yres=1080 -display gtk \
+  -smbios type=1,manufacturer="kan-linux",product="kan-linux 0.3.2",version="0.3.2" \
+  -usb -device usb-tablet \
+  -audiodev pa,id=audio0,out.buffer-length=100000,in.buffer-length=100000,timer-period=1000 \
+  -device intel-hda -device hda-duplex,audiodev=audio0 \
+  -netdev user,id=net0,hostfwd=tcp::2222-:22 \
+  -device virtio-net-pci,netdev=net0</code></pre>
+
+        <!-- ============================================================ -->
+        <h2 id="vm-install">Install Kan-Linux to a virtual disk</h2>
+
+        <h3>1. Create a virtual disk</h3>
+        <pre><code>qemu-img create -f qcow2 kanlinux.qcow2 20G</code></pre>
+
+        <h3>2. Launch the LiveISO with the virtual disk attached</h3>
+        <pre><code>qemu-system-x86_64 -enable-kvm -cpu host -m 4G -smp 2 \
+  -drive file=kanlinux.qcow2,format=qcow2,if=virtio \
+  -cdrom kan-linux-0.3.2-x86_64.iso -boot d \
+  -device virtio-vga-gl,xres=1920,yres=1080 -display gtk,gl=on \
+  -smbios type=1,manufacturer=Kan-Linux,product=Kan-Linux 0.3.2,version=0.3.2 \
+  -usb -device usb-tablet \
+  -audiodev pa,id=audio0,out.buffer-length=100000,in.buffer-length=100000,timer-period=1000 \
+  -device intel-hda -device hda-duplex,audiodev=audio0 \
+  -netdev user,id=net0,hostfwd=tcp::2222-:22 \
+  -device virtio-net-pci,netdev=net0</code></pre>
+
+        <h3>3. Run the installer from the LiveISO</h3>
+        <p>
+          The installer supports single-OS installation to a specified partition or a
+          standalone disk among multiple disks. Launch it from the live session and
+          follow the prompts.
+        </p>
+
+        <div class="shot-grid">
+          <figure class="shot">
+            <img src="https://github.com/user-attachments/assets/b3f7249e-6005-4a99-9b47-b34edffe96e8"
+                 alt="Installer step 1" loading="lazy" width="641" height="482">
+          </figure>
+          <figure class="shot">
+            <img src="https://github.com/user-attachments/assets/ed72cd14-95c8-4c7f-ae50-79de795b614d"
+                 alt="Installer step 2" loading="lazy" width="641" height="482">
+          </figure>
+          <figure class="shot">
+            <img src="https://github.com/user-attachments/assets/5b7f3837-eed3-44aa-ac09-1c187921674e"
+                 alt="Installer step 3" loading="lazy" width="641" height="482">
+          </figure>
+          <figure class="shot">
+            <img src="https://github.com/user-attachments/assets/eb12d4c3-2dc1-43ee-9483-0b66308bfb2b"
+                 alt="Installer step 4" loading="lazy" width="641" height="482">
+          </figure>
+        </div>
+        <p style="color:var(--muted); font-size:0.92rem; margin-top:-0.5rem;">
+          Installation behaves the same in virtual machines and on physical x86-64 laptops and PCs.
+        </p>
+
+        <h3>4. Boot the installed system</h3>
+        <p>Launch again without <code>-cdrom</code> / <code>-boot d</code>, or simply keep the same command — the virtual disk now holds Kan-Linux:</p>
+        <pre><code>qemu-system-x86_64 -enable-kvm -cpu host -m 4G -smp 2 \
+  -drive file=kanlinux.qcow2,format=qcow2,if=virtio \
+  -device virtio-vga-gl,xres=1920,yres=1080 -display gtk,gl=on \
+  -smbios type=1,manufacturer=Kan-Linux,product=Kan-Linux 0.3.2,version=0.3.2 \
+  -usb -device usb-tablet \
+  -audiodev pa,id=audio0,out.buffer-length=100000,in.buffer-length=100000,timer-period=1000 \
+  -device intel-hda -device hda-duplex,audiodev=audio0 \
+  -netdev user,id=net0,hostfwd=tcp::2222-:22 \
+  -device virtio-net-pci,netdev=net0</code></pre>
+
+        <!-- ============================================================ -->
+        <h2 id="hardware">Use the LiveISO on real x86-64 laptops and PCs</h2>
+
+        <h3>1. Create a LiveUSB</h3>
+        <div class="callout">
+          <p><strong>Attention.</strong> Double-check the USB device path with <code>lsblk</code> before writing — writing to the wrong device will destroy your data.</p>
+        </div>
+
+        <pre><code># verify the USB device path is /dev/sdb with lsblk  (ATTENTION here)
+lsblk
+
+sudo dd if=kan-linux-0.3.2-x86_64.iso of=/dev/sdb bs=4M status=progress conv=fsync</code></pre>
+
+        <h3>2. Configure BIOS settings</h3>
+        <p>
+          Adjust your laptop or PC BIOS before installing Kan-Linux from the LiveUSB.
+          The exact option names vary by firmware vendor.
+        </p>
+
+        <h3>Essential</h3>
+        <p>These options must appear in your BIOS and be enabled:</p>
+        <div class="shot-grid">
+          <figure class="shot">
+            <img src="https://github.com/user-attachments/assets/4d339694-8185-4793-bca4-eacae4f09b6f"
+                 alt="Essential BIOS settings (1)" loading="lazy">
+          </figure>
+          <figure class="shot">
+            <img src="https://github.com/user-attachments/assets/009c4ac2-af49-4070-97d2-a83d21aeee04"
+                 alt="Essential BIOS settings (2)" loading="lazy">
+          </figure>
+        </div>
+
+        <h3>Optional</h3>
+        <p>These options may not appear in your BIOS — enable them if available:</p>
+        <figure class="shot">
+          <img src="https://github.com/user-attachments/assets/0014f102-2123-4aa1-84f4-65342832f9ea"
+               alt="Optional BIOS settings" loading="lazy">
+        </figure>
+
+        <h3>3. Install from the LiveUSB</h3>
+        <p>
+          Boot from the LiveUSB, then launch the installer. The process is the same
+          as in a virtual machine (see the screenshots above).
+        </p>
+
+        <h3>4. First boot on real hardware</h3>
+        <figure class="shot">
+          <img src="https://github.com/user-attachments/assets/6f964ed0-dfb4-4068-9f75-d73d7c49ab71"
+               alt="Kan-Linux first boot on real hardware" loading="lazy" width="1908" height="1010">
+          <figcaption>Kan-Linux running on a physical x86-64 laptop.</figcaption>
+        </figure>
+
+        <figure class="shot">
+          <img src="https://github.com/user-attachments/assets/f447ba67-9866-4a8d-a6b2-fa1c3565467a"
+               alt="Kan-Linux desktop after installation" loading="lazy" width="1920" height="1080">
+          <figcaption>Kan-Linux desktop — modern Wayland session with the customized Omarchy shell.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-bottom">
+      <span>© 2026 Kan-Linux · <a href="https://kan-linux.org">kan-linux.org</a></span>
+      <span>
+        This project may include trademarks or logos belonging to third parties.
+        Use of any third-party trademarks is governed by their respective policies.
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

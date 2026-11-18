@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="About Kan-Linux — the philosophy of 勘 (Kan), design principles, roadmap, how to contribute, and our contributions to the open-source community.">
+  <meta name="theme-color" content="#f4efe6">
+  <title>About — Kan-Linux</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;520;640&family=Outfit:wght@500;640;720&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="index.html" aria-label="Kan-Linux home">
+      <img class="brand-mark" src="assets/kanlinux-mark.png" alt="">
+      <span>Kan-Linux</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="docs.html">Docs</a></li>
+      <li><a href="about.html" aria-current="page">About</a></li>
+      <li><a href="https://github.com/kan-linux/kan" target="_blank" rel="noopener">GitHub</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="page-hero">
+    <div class="wrap">
+      <h1>About Kan-Linux</h1>
+    </div>
+  </section>
+
+  <div class="prose">
+    <div class="wrap docs-layout">
+      <nav class="toc" aria-label="On this page">
+        <ul>
+          <li><a href="#philosophy">Philosophy</a></li>
+          <li><a href="#principles">Design principles</a></li>
+          <li><a href="#omarchy">Differences and connections with Omarchy-Linux</a></li>
+          <li><a href="#oss">Our contributions to the open-source community</a></li>
+          <li><a href="#credits">Acknowledgements</a></li>
+        </ul>
+      </nav>
+
+      <div>
+        <!-- ============================================================ -->
+        <h2 id="philosophy">Philosophy</h2>
+        <p>
+          <strong>Kan-Linux</strong> (or KanLinux) is a <strong>concise</strong>,
+          <strong>secure</strong> and <strong>Agent-first</strong> Linux distribution.
+          The name <strong>Kan (勘)</strong> derives from
+          <a href="https://en.wikipedia.org/wiki/Wang_Yangming" target="_blank" rel="noopener">Wang Yangming</a>'s
+          <em>Instructions for Practical Living</em>, representing the philosophy of
+          breaking through technical obscurations and returning to the system's
+          original simplicity.
+        </p>
+        <p>
+          The main goal of Kan-Linux is to build a concise, secure and Agent-first
+          Linux distro at the edge — locally and in the cloud.
+        </p>
+
+        <!-- ============================================================ -->
+        <h2 id="principles">Design principles</h2>
+
+        <h3>Simplicity</h3>
+        <p>
+          Eliminate overly complex wrapper layers and over-engineering, following the
+          core philosophy of
+          <a href="https://github.com/ggml-org/llama.cpp" target="_blank" rel="noopener">ggml/llama.cpp</a>.
+          <strong>Kan-Linux is not dependent on any existing Linux distribution.</strong>
+        </p>
+        <ul>
+          <li>Keep the LiveISO compact while supporting a rich set of modern desktop features.</li>
+          <li>
+            The full self-hosting bootstrapping pipeline covers only the OS base system.
+            Heavy desktop applications (Chromium, office suite, …) are built separately on
+            top of a fully bootstrapped Kan-Linux instance and distributed as optional
+            artifacts — similar to the pinned official Firefox tar.gz / tar.xz releases.
+          </li>
+          <li>
+            <strong>No GNOME or KDE desktop stacks.</strong> While GTK and Qt are capable
+            toolkits, Kan-Linux builds a lean, minimal desktop environment from scratch.
+            Applications are pluggable, with no mandatory global metadata, introspection
+            subsystems, or complex hidden runtime contracts.
+          </li>
+        </ul>
+
+        <h3>Monorepo</h3>
+        <p>
+          Drawing lessons from many existing Linux distributions and the highly
+          complicated <a href="https://www.yoctoproject.org/" target="_blank" rel="noopener">Yocto Project</a>,
+          Kan-Linux adopts an AOSP-style single-repository architecture. All source code
+          resides in one repository to simplify development, builds and maintenance.
+        </p>
+
+        <h3>Secure</h3>
+        <p>
+          Our goal is not an unbreakable system, but to shrink the TCB and attack surface,
+          while maximizing SBOM clarity and supply-chain security.
+        </p>
+        <ul>
+          <li>Optimized for single-user desktop workflows to reduce attack surface.</li>
+          <li>
+            <strong>Source-built</strong> — the base OS and its components are compiled from
+            source, with a small explicit exception list: prebuilt artifacts such as Go, Rust,
+            Firefox, Vulkan SDK and user-installed software. This maximizes SBOM transparency
+            and supply-chain auditability.
+          </li>
+          <li><strong>SELinux is excluded intentionally to keep the TCB minimal.</strong></li>
+          <li>
+            <strong>AI-native security audit pipeline</strong> — Kan-Linux embeds LLM-powered
+            source-level security auditing (GLM-5.3 and other high-capability models) as a
+            mandatory pre-compilation gate, complementing human review. Security validation
+            shifts from post-hoc binary scanning to source-code admission review.
+          </li>
+          <li>100% full self-hosting; 100% reproducible builds.</li>
+        </ul>
+
+        <h3>Agent-First</h3>
+        <ul>
+          <li>
+            <strong>No traditional package manager.</strong>
+            <a href="https://github.com/kan-linux/kan-agent" target="_blank" rel="noopener">AI agents are a core component of Kan-Linux</a>:
+            they autonomously compile, deploy, install components, run system health checks,
+            and resolve issues.
+          </li>
+          <li>
+            <strong>llama.cpp-First</strong> — a native, integrated llama.cpp edge inference
+            engine is provided for local AI deployment.
+          </li>
+          <li>
+            Maintain a balance between Agent-first automation and plain human-readable
+            interfaces and workflows.
+          </li>
+        </ul>
+
+        <!-- ============================================================ -->
+        <h2 id="omarchy">Differences and connections with Omarchy-Linux</h2>
+        <ul>
+          <li>
+            Omarchy-Linux targets end users, delivering an out-of-the-box complete desktop
+            system, with <strong>visual polish as one of its core goals</strong>.
+            <strong>Kan-Linux is built for programmers and AI researchers</strong>, providing
+            a neutral, modern pure Wayland-based Linux distribution. Focused on
+            <strong>controllability</strong>, <strong>auditability</strong> (no black-box
+            within the OS), <strong>modularity and reproducible builds</strong> — and visual
+            polish is not a project objective.
+          </li>
+          <li>
+            Kan-Linux draws inspiration from
+            <a href="https://github.com/kan-linux/omarchy" target="_blank" rel="noopener">Omarchy's desktop shell</a>
+            and integrates it as our optional early default desktop shell. We port this
+            tasteful shell as an upper-layer UI example to show the capabilities of the
+            Kan-Linux platform. Even if we remove or disable the Omarchy desktop shell in
+            the future due to unexpected reasons, the whole system and graphics
+            infrastructure can still run fully and independently.
+          </li>
+          <li>
+            Omarchy-Linux is based on the upstream Arch Linux distribution, while Kan-Linux
+            is built completely from scratch and <strong>does not rely on any upstream Linux
+            distribution</strong>.
+          </li>
+          <li>
+            Kan-Linux provides Omarchy-comparable desktop UI and keybindings plus powerful
+            development environments for programmers and AI Agents.
+          </li>
+        </ul>
+
+        <!-- ============================================================ -->
+        <h2 id="oss">Our contributions to the open-source community</h2>
+        <ul class="tag-list">
+          <li><a href="https://github.com/kan-linux/ggml-hexagon" target="_blank" rel="noopener">ggml-hexagon</a> — customized llama.cpp</li>
+          <li><a href="https://github.com/hyprwm/.github/discussions/116" target="_blank" rel="noopener">Hyprland</a> — Wayland compositor</li>
+          <li><a href="https://github.com/quickshell-mirror/quickshell/pull/1261" target="_blank" rel="noopener">Quickshell</a></li>
+          <li><a href="https://github.com/kan-linux/omarchy" target="_blank" rel="noopener">omarchy</a> — customized desktop shell</li>
+          <li><a href="https://github.com/kan-linux/fcitx5" target="_blank" rel="noopener">fcitx5</a> — Chinese input method</li>
+          <li><a href="https://github.com/kan-linux/qmail" target="_blank" rel="noopener">qmail</a> — LAN email server</li>
+          <li><a href="https://github.com/lgse/strata/pull/2072" target="_blank" rel="noopener">strata</a> — file manager</li>
+        </ul>
+
+        <!-- ============================================================ -->
+        <h2 id="credits">Acknowledgements</h2>
+        <ul>
+          <li>
+            Inspired by Omarchy (<strong>“Convention over Configuration”</strong>) and
+            <a href="https://github.com/omacom/omarchy" target="_blank" rel="noopener">Omarchy's desktop shell</a>.
+          </li>
+          <li>Inspired by <a href="https://github.com/ggml-org/llama.cpp" target="_blank" rel="noopener">llama.cpp</a>.</li>
+          <li>
+            Thanks to the entire Linux community — Red Hat (RHEL/Fedora/QEMU), SPI (Debian),
+            Linux Foundation, Linaro, Canonical (Ubuntu), System76 (Pop!_OS), UnionTech
+            (Deepin/UOS) and many others.
+          </li>
+          <li>
+            The Kan Linux project wants to recognize and thank the hard work of Linux
+            community put in. We are grateful to be part of the Linux community and
+            provide this modern Desktop Linux operating system.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-bottom">
+      <span>© 2026 Kan-Linux · <a href="https://kan-linux.org">kan-linux.org</a></span>
+      <span>
+        This project may include trademarks or logos belonging to third parties.
+        Use of any third-party trademarks is governed by their respective policies.
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

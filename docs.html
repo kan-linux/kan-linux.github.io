@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kan-Linux documentation — keyboard shortcuts and keeping components up to date.">
+  <meta name="theme-color" content="#f4efe6">
+  <title>Documentation — Kan-Linux</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;520;640&family=Outfit:wght@500;640;720&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="index.html" aria-label="Kan-Linux home">
+      <img class="brand-mark" src="assets/kanlinux-mark.png" alt="">
+      <span>Kan-Linux</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="docs.html" aria-current="page">Docs</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="https://github.com/kan-linux/kan" target="_blank" rel="noopener">GitHub</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="page-hero">
+    <div class="wrap">
+      <h1>Documentation</h1>
+      <p class="lead">
+        Guides for living with Kan-Linux — desktop shortcuts and keeping components
+        up to date.
+      </p>
+    </div>
+  </section>
+
+  <div class="prose">
+    <div class="wrap docs-layout">
+      <nav class="toc" aria-label="On this page">
+        <ul>
+          <li><a href="download-and-install.html">Download &amp; Install</a></li>
+          <li><a href="#shortcuts">Keyboard shortcuts in desktop mode</a></li>
+          <li><a href="#components">Update &amp; install components</a></li>
+        </ul>
+      </nav>
+
+      <div>
+        <!-- ============================================================ -->
+        <h2 id="shortcuts">Keyboard shortcuts in desktop mode</h2>
+        <p>Most key bindings are consistent with Omarchy Linux.</p>
+
+        <table class="kbd-table">
+          <thead>
+            <tr><th>Shortcut</th><th>Action</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><kbd>Super</kbd> + <kbd>Return</kbd></td><td>Launch terminal</td></tr>
+            <tr><td><kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>Return</kbd></td><td>Launch Firefox (online movie playback supported)</td></tr>
+            <tr><td><kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>F</kbd></td><td>Launch Strata (featured file manager)</td></tr>
+            <tr><td><kbd>Super</kbd> + <kbd>Escape</kbd></td><td>System menu</td></tr>
+            <tr><td><kbd>Super</kbd> + <kbd>K</kbd></td><td>Keybindings dialog</td></tr>
+            <tr><td><kbd>Super</kbd> + <kbd>Ctrl</kbd> + <kbd>L</kbd></td><td>Lock desktop shell</td></tr>
+            <tr><td><kbd>Super</kbd> + <kbd>Alt</kbd> + <kbd>F</kbd></td><td>Maximize window</td></tr>
+            <tr><td><kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>Space</kbd></td><td>Toggle top toolbar visibility</td></tr>
+            <tr><td><kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>A</kbd></td><td>Screenshot (featured tool — thanks to <a href="https://github.com/manateelazycat" target="_blank" rel="noopener">lazycat</a>)</td></tr>
+            <tr><td><kbd>Ctrl</kbd> + <kbd>Space</kbd></td><td>Toggle Chinese / English input (English is the default)</td></tr>
+          </tbody>
+        </table>
+
+        <!-- ============================================================ -->
+        <h2 id="components">Update &amp; install components</h2>
+        <p>
+          Kan-Linux has no traditional package manager. Components are updated and
+          installed <strong>on demand</strong> via a built-in script — run it yourself,
+          or let the built-in MiCode execute it. That is the Agent-First way.
+          <a href="https://github.com/kan-linux/kan-agent" target="_blank" rel="noopener">Kan-Agent</a>
+          is under development.
+        </p>
+
+        <h3>Update Firefox, MiMo-Code and Java SDK (preinstalled)</h3>
+        <p>Ask the built-in MiCode (or run it yourself):</p>
+        <pre><code>read /opt/skills/install-prebuilts.sh carefully, and then
+execute sudo /opt/skills/install-prebuilts.sh to update Firefox / MiMo-Code / Java SDK</code></pre>
+
+        <h3>Install Go, Rust, NodeJS, Vulkan SDK and LibreOffice</h3>
+        <p>Ask the built-in MiCode (or run it yourself):</p>
+        <pre><code>read /opt/skills/install-prebuilts.sh carefully, and then
+execute sudo /opt/skills/install-prebuilts.sh to install Go / Rust / NodeJS / Vulkan SDK / LibreOffice</code></pre>
+
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-bottom">
+      <span>© 2026 Kan-Linux · <a href="https://kan-linux.org">kan-linux.org</a></span>
+      <span>
+        This project may include trademarks or logos belonging to third parties.
+        Use of any third-party trademarks is governed by their respective policies.
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

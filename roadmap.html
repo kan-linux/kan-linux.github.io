@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kan-Linux roadmap — from PoC in QEMU to full self-hosting and the Agent-First stage.">
+  <meta name="theme-color" content="#f4efe6">
+  <title>Roadmap — Kan-Linux</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;520;640&family=Outfit:wght@500;640;720&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="index.html" aria-label="Kan-Linux home">
+      <img class="brand-mark" src="assets/kanlinux-mark.png" alt="">
+      <span>Kan-Linux</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="docs.html">Docs</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="https://github.com/kan-linux/kan" target="_blank" rel="noopener">GitHub</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="page-hero">
+    <div class="wrap">
+      <h1>Roadmap</h1>
+      <p class="lead">
+        From PoC in QEMU to full self-hosting on real x86-64 machines,
+        and on to the Agent-First stage — where Kan-Linux is heading.
+      </p>
+    </div>
+  </section>
+
+  <div class="prose">
+    <div class="wrap-narrow">
+      <ul class="roadmap">
+        <li class="done">
+          <span class="stage">Stage 1 — PoC validation (2019.5.28-2026.10.5 · 2019 May 28 Initial project, 2026 Sep Re-launch project)</span>
+          <span class="desc">Complete <a href="https://github.com/kan-linux/kan/releases/tag/v0.2.6" target="_blank" rel="noopener">PoC validation</a> of Kan-Linux via QEMU virtual machine.</span>
+        </li>
+        <li class="done">
+          <span class="stage">Stage 2.1 — Desktop shell</span>
+          <span class="desc">Integrate a preliminary, feature-limited, <a href="https://github.com/kan-linux/omarchy/tree/kan" target="_blank" rel="noopener">customized Omarchy desktop shell</a> and login greeter for QEMU virtual machine environments.</span>
+        </li>
+        <li class="done">
+          <span class="stage">Stage 2.2 — Installer</span>
+          <span class="desc">Enable and validate Kan-Linux installer via QEMU virtual machine.</span>
+        </li>
+        <li class="done">
+          <span class="stage">Stage 2.3 — Stabilize (VM)</span>
+          <span class="desc">Refine and stabilize via QEMU virtual machine.</span>
+        </li>
+        <li class="done">
+          <span class="stage">Stage 2.4 — Real hardware</span>
+          <span class="desc">Enable and validate the Kan-Linux boot and runtime support for physical x86_64 desktop PCs / laptops.</span>
+        </li>
+        <li class="done">
+          <span class="stage">Stage 2.5 — Desktop-native AI Agent</span>
+          <span class="desc">Integrate desktop-native AI Agent in Kan-Linux on physical x86_64 hardware.</span>
+        </li>
+        <li class="done">
+          <span class="stage">Milestone — Full self-hosting</span>
+          <span class="desc">Kan-Linux achieved full self-hosting for the first time at 15:20 (UTC+0800) on Nov 09, 2026. All subsequent development, building and iteration of Kan-Linux will happen <strong>inside Kan-Linux itself</strong>.</span>
+        </li>
+        <li>
+          <span class="stage">Stage 2.6 — Refine &amp; stabilize</span>
+          <span class="desc">Refine and stabilize for physical x86_64 desktops / laptops.</span>
+        </li>
+        <li>
+          <span class="stage">Stage 3 — Agent-First</span>
+        </li>
+        <li>
+          <span class="stage">Stage 3.1 — HLD (high level design)</span>
+        </li>
+        <li>
+          <span class="stage">Stage 3.2 — llama.cpp + Agent-based build system for other components</span>
+        </li>
+        <li>
+          <span class="stage">Stage 3.3 — PoC</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-bottom">
+      <span>© 2026 Kan-Linux · <a href="https://kan-linux.org">kan-linux.org</a></span>
+      <span>
+        This project may include trademarks or logos belonging to third parties.
+        Use of any third-party trademarks is governed by their respective policies.
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

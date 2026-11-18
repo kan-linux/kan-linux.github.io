@@ -1,334 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Kan-Linux — a Simplicity, Source-built, Agent-First Linux distro for programmers, AI researchers and distro builders.">
-<meta name="color-scheme" content="dark">
-<meta name="theme-color" content="#0d1117">
-<title>Kan-Linux — Simplicity, Source-built, Agent-First Linux</title>
-<link rel="icon" type="image/png" href="assets/favicon.png">
-<style>
-:root {
-  --bg: #0d1117;
-  --bg-soft: #121924;
-  --bg-card: #161d29;
-  --border: #243041;
-  --text: #e9eef5;
-  --muted: #96a4b4;
-  --faint: #6c7a8a;
-  --accent: #f0782c;
-  --accent-soft: rgba(240, 120, 44, 0.13);
-  --ok: #3dd68c;
-  --radius: 12px;
-  --max: 820px;
-  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
-          "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-}
-
-* { box-sizing: border-box; }
-
-html { scroll-behavior: smooth; }
-
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font);
-  font-size: 16px;
-  line-height: 1.7;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-}
-
-a {
-  color: var(--accent);
-  text-decoration: none;
-}
-a:hover { text-decoration: underline; }
-
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-.wrap {
-  width: min(var(--max), calc(100% - 2.5rem));
-  margin: 0 auto;
-}
-
-.skip-link {
-  position: absolute;
-  left: -999px;
-  top: 0.75rem;
-  background: var(--accent);
-  color: #1a0f06;
-  padding: 0.5rem 0.9rem;
-  border-radius: 8px;
-  font-weight: 600;
-  z-index: 100;
-}
-.skip-link:focus { left: 0.75rem; text-decoration: none; }
-
-/* ---------- header ---------- */
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  background: rgba(13, 17, 23, 0.8);
-  border-bottom: 1px solid rgba(36, 48, 65, 0.7);
-}
-
-.nav {
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-  padding: 0.8rem 0;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 0.55rem;
-  color: var(--text);
-  font-weight: 700;
-  letter-spacing: 0.01em;
-  text-decoration: none;
-}
-.brand:hover { text-decoration: none; }
-
-.brand-mark {
-  width: 1.75rem;
-  height: 1.75rem;
-  border-radius: 6px;
-  object-fit: cover;
-  object-position: left center;
-  background: var(--bg-soft);
-}
-
-.brand-name {
-  font-size: 0.98rem;
-  white-space: nowrap;
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-  list-style: none;
-  margin: 0 0 0 auto;
-  padding: 0;
-}
-
-.nav-links a {
-  color: var(--muted);
-  font-size: 0.88rem;
-  text-decoration: none;
-}
-.nav-links a:hover { color: var(--text); }
-
-/* ---------- buttons ---------- */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.45rem;
-  padding: 0.62rem 1.15rem;
-  border-radius: 10px;
-  font-size: 0.92rem;
-  font-weight: 600;
-  text-decoration: none;
-  border: 1px solid transparent;
-  transition: transform .15s ease, background .15s ease, border-color .15s ease;
-  white-space: nowrap;
-  cursor: pointer;
-}
-.btn:hover {
-  text-decoration: none;
-  transform: translateY(-1px);
-}
-.btn-primary {
-  background: var(--accent);
-  color: #1a0f06;
-}
-.btn-primary:hover { background: #ff8a3d; }
-.btn-ghost {
-  background: transparent;
-  color: var(--text);
-  border-color: var(--border);
-}
-.btn-ghost:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-
-/* ---------- hero ---------- */
-.hero {
-  padding: 4.25rem 0 3.25rem;
-}
-
-.hero h1 {
-  margin: 0 0 0.9rem;
-  font-size: clamp(2.1rem, 6vw, 3.15rem);
-  line-height: 1.12;
-  letter-spacing: -0.03em;
-  font-weight: 760;
-  max-width: 16em;
-}
-.hero h1 .accent { color: var(--accent); }
-
-.slogan {
-  margin: 0 0 1.15rem;
-  font-size: clamp(1.05rem, 2.6vw, 1.3rem);
-  color: var(--muted);
-  font-weight: 500;
-  letter-spacing: -0.01em;
-}
-
-.lead {
-  margin: 0 0 1.9rem;
-  max-width: 36rem;
-  color: var(--muted);
-  font-size: 1.02rem;
-}
-.lead b { color: var(--text); font-weight: 650; }
-
-.hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.7rem;
-}
-
-/* ---------- sections ---------- */
-section {
-  padding: 3rem 0;
-  border-top: 1px solid var(--border);
-}
-
-.section-title {
-  margin: 0 0 0.5rem;
-  font-size: clamp(1.3rem, 3.2vw, 1.6rem);
-  letter-spacing: -0.02em;
-}
-
-.section-sub {
-  margin: 0 0 1.65rem;
-  color: var(--muted);
-  max-width: 38rem;
-  font-size: 0.98rem;
-}
-
-/* ---------- news ---------- */
-.news-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.news-list li {
-  display: flex;
-  align-items: baseline;
-  gap: 1.15rem;
-  padding: 0.85rem 0;
-  border-bottom: 1px solid rgba(36, 48, 65, 0.55);
-}
-.news-list li:first-child { padding-top: 0; }
-.news-list li:last-child { border-bottom: none; padding-bottom: 0; }
-
-.news-date {
-  flex: 0 0 auto;
-  width: 7.4rem;
-  color: var(--faint);
-  font-family: var(--mono);
-  font-size: 0.8rem;
-  letter-spacing: -0.01em;
-}
-
-.news-list a {
-  color: var(--text);
-  font-size: 0.98rem;
-  font-weight: 550;
-}
-.news-list a:hover { color: var(--accent); }
-
-.news-more {
-  margin: 1.35rem 0 0;
-  font-size: 0.9rem;
-}
-
-/* ---------- docs ---------- */
-.docs-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-}
-
-.docs-row .section-sub { margin: 0; }
-
-/* ---------- cta ---------- */
-.cta {
-  background:
-    radial-gradient(900px 300px at 15% -30%, rgba(240, 120, 44, 0.16), transparent 70%),
-    var(--bg-soft);
-  border: 1px solid var(--border);
-  border-radius: calc(var(--radius) + 4px);
-  padding: 2.35rem 2rem;
-}
-.cta h2 {
-  margin: 0 0 0.55rem;
-  font-size: clamp(1.35rem, 3.2vw, 1.7rem);
-  letter-spacing: -0.02em;
-}
-.cta p {
-  margin: 0 0 1.35rem;
-  color: var(--muted);
-  max-width: 34rem;
-  font-size: 0.98rem;
-}
-.cta .hero-actions { margin: 0; }
-
-/* ---------- footer ---------- */
-.site-footer {
-  padding: 2.25rem 0 2.75rem;
-  color: var(--faint);
-  font-size: 0.82rem;
-  border-top: 1px solid var(--border);
-}
-.site-footer a { color: var(--muted); }
-.site-footer a:hover { color: var(--accent); }
-.footer-note p { margin: 0.35rem 0; }
-
-/* ---------- responsive ---------- */
-@media (max-width: 640px) {
-  .wrap { width: min(var(--max), calc(100% - 1.75rem)); }
-
-  .nav { gap: 0.85rem; }
-  .nav-links { gap: 0.95rem; }
-
-  .hero { padding: 2.65rem 0 2.25rem; }
-
-  .news-list li {
-    flex-direction: column;
-    gap: 0.2rem;
-    align-items: flex-start;
-  }
-  .news-date { width: auto; }
-
-  section { padding: 2.25rem 0; }
-
-  .cta { padding: 1.85rem 1.35rem; }
-
-  .hero-actions .btn { width: 100%; }
-  .hero-actions { flex-direction: column; }
-  .cta .hero-actions { flex-direction: column; }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kan-Linux — a concise, secure, agent-first Linux distribution built from scratch in a single monorepo, for programmers, AI researchers and distro builders.">
+  <meta name="theme-color" content="#f4efe6">
+  <meta property="og:title" content="Kan-Linux — Concise, Secure, Agent-first Linux">
+  <meta property="og:description" content="A concise, secure, agent-first Linux distribution built from scratch within a single repository.">
+  <meta property="og:image" content="assets/kanlinux-banner.png">
+  <title>Kan-Linux — Concise, Secure, Agent-first Linux</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;520;640&family=Outfit:wght@500;640;720&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
@@ -336,135 +21,157 @@ section {
 
 <header class="site-header">
   <div class="wrap nav">
-    <a class="brand" href="#top" aria-label="Kan-Linux home">
+    <a class="brand" href="index.html" aria-label="Kan-Linux home">
       <img class="brand-mark" src="assets/kanlinux-mark.png" alt="">
-      <span class="brand-name">Kan-Linux</span>
+      <span>Kan-Linux</span>
     </a>
     <ul class="nav-links">
-      <li><a href="#news">News</a></li>
-      <li><a href="#history">History</a></li>
-      <li><a href="https://github.com/kan-linux/kan/wiki" target="_blank" rel="noopener">Wiki</a></li>
+      <li><a href="index.html" aria-current="page">Home</a></li>
+      <li><a href="docs.html">Docs</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="https://github.com/kan-linux/kan" target="_blank" rel="noopener">GitHub</a></li>
     </ul>
-    <a class="btn btn-ghost" href="https://github.com/kan-linux" target="_blank" rel="noopener">GitHub</a>
   </div>
 </header>
 
 <main id="main">
 
-  <!-- Hero -->
-  <section class="hero" id="top" style="border-top: none;">
-    <div class="wrap">
-      <h1>
-        Concise, Source-built, Secure and
-        <span class="accent">Agent-first</span> Linux distro at the edge
-      </h1>
+  <!-- ============ Eye-catch (hero) ============ -->
+  <section class="eye-catch">
+    <div class="wrap eye-catch-grid">
+      <div>
+        <h1>
+          Concise, Source-built, Secure and
+          <span class="accent">Agent-first</span> Linux distro at the edge
+        </h1>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://github.com/kan-linux/kan/releases/latest" target="_blank" rel="noopener">Download LiveISO</a>
+        </div>
+      </div>
 
+      <!-- Hero illustration: clean line-art laptop with Kan-Linux logo, Asahi-style -->
+      <div class="hero-art" aria-hidden="true">
+        <svg viewBox="0 0 520 420" xmlns="http://www.w3.org/2000/svg" role="img">
+          <defs>
+            <clipPath id="screenClip">
+              <rect x="106" y="62" width="308" height="216" rx="8"/>
+            </clipPath>
+          </defs>
 
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="https://github.com/kan-linux/kan/releases/tag/v0.3.2" target="_blank" rel="noopener">Download v0.3.2</a>
+          <!-- laptop lid -->
+          <rect x="86" y="42" width="348" height="256" rx="18"
+                fill="#fffdf9" stroke="#2c2620" stroke-width="3.5"/>
+          <!-- screen: real Kan-Linux desktop screenshot -->
+          <rect x="106" y="62" width="308" height="216" rx="8" fill="#0a0a12"/>
+          <image href="assets/kan-linux-running.png"
+                 x="106" y="62" width="308" height="216"
+                 preserveAspectRatio="xMidYMid slice"
+                 clip-path="url(#screenClip)"/>
+          <rect x="106" y="62" width="308" height="216" rx="8"
+                fill="none" stroke="#2c2620" stroke-width="2.5"/>
+
+          <!-- laptop base -->
+          <path d="M58 298 L462 298 L488 332 Q492 342 482 342 L38 342 Q28 342 32 332 Z"
+                fill="#fffdf9" stroke="#2c2620" stroke-width="3.5" stroke-linejoin="round"/>
+          <!-- trackpad hint -->
+          <rect x="222" y="304" width="76" height="8" rx="4"
+                fill="none" stroke="#2c2620" stroke-width="2.2"/>
+          <!-- base groove -->
+          <path d="M48 332 L472 332" stroke="#2c2620" stroke-width="1.6" opacity="0.35"/>
+        </svg>
       </div>
     </div>
   </section>
 
-  <!-- News -->
-  <section id="news">
+  <!-- ============ Documentation ============ -->
+  <section class="section section-white" id="docs">
     <div class="wrap">
-      <h2 class="section-title">News</h2>
-      <p class="section-sub">Latest releases.</p>
+      <div class="center-title">
+        <h2>Documentation</h2>
+      </div>
 
-      <ul class="news-list">
+      <ul class="doc-links">
         <li>
-          <time class="news-date" datetime="2026-11-14">2026 Nov 14</time>
-          <a href="https://github.com/kan-linux/kan/releases/tag/v0.3.2" target="_blank" rel="noopener">Kan-Linux v0.3.2 released</a>
-        </li>
-
-        <li>
-          <time class="news-date" datetime="2026-11-09">2026 Nov 09</time>
-          Kan-Linux achieved full self-hosting for the first time at 15:20 on Nov 09, 2026
-        </li>
-
-        <li>
-          <time class="news-date" datetime="2026-11-07">2026 Nov 07</time>
-          <a href="https://github.com/kan-linux/kan/releases/tag/v0.3.1" target="_blank" rel="noopener">Kan-Linux v0.3.1 released</a>
-        </li>
-
-        <li>
-          <time class="news-date" datetime="2026-10-31">2026 Oct 31</time>
-          <a href="https://github.com/kan-linux/kan/releases/tag/v0.3.0" target="_blank" rel="noopener">Kan-Linux v0.3.0 released</a>
+          <a href="download-and-install.html#verify">
+            <span class="ico"><svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 21h14"/></svg></span>
+            <span>
+              <span class="t">Download &amp; verify</span>
+              <span class="d">Fetch the LiveISO and check its SHA256 checksum.</span>
+            </span>
+          </a>
         </li>
         <li>
-          <time class="news-date" datetime="2026-10-24">2026 Oct 24</time>
-          <a href="https://github.com/kan-linux/kan/releases/tag/v0.2.9" target="_blank" rel="noopener">Kan-Linux v0.2.9 released</a>
+          <a href="download-and-install.html#vm">
+            <span class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg></span>
+            <span>
+              <span class="t">Run in a VM</span>
+              <span class="d">Try Kan-Linux with QEMU — no hardware changes needed.</span>
+            </span>
+          </a>
         </li>
         <li>
-          <time class="news-date" datetime="2026-10-17">2026 Oct 17</time>
-          <a href="https://github.com/kan-linux/kan/releases/tag/v0.2.8" target="_blank" rel="noopener">Kan-Linux v0.2.8 released</a>
-        </li>
-        <li>
-          <time class="news-date" datetime="2026-10-10">2026 Oct 10</time>
-          <a href="https://github.com/kan-linux/kan/releases/tag/v0.2.7" target="_blank" rel="noopener">Kan-Linux v0.2.7 released</a>
-        </li>
-        <li>
-          <time class="news-date" datetime="2026-10-01">2026 Oct 01</time>
-          <a href="https://github.com/kan-linux/kan/releases/tag/v0.2.6" target="_blank" rel="noopener">Kan-Linux v0.2.6 released</a>
+          <a href="download-and-install.html#hardware">
+            <span class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M2 21h20"/><path d="M7 9h.01M11 9h.01"/></svg></span>
+            <span>
+              <span class="t">Install on real hardware</span>
+              <span class="d">LiveUSB creation, BIOS settings and installation.</span>
+            </span>
+          </a>
         </li>
       </ul>
 
-      <p class="news-more">
-        <a href="https://github.com/kan-linux/kan/releases" target="_blank" rel="noopener">All releases →</a>
+      <p style="text-align:center; margin-top:2.15rem;">
+        <a class="more-link" href="docs.html">Browse all documentation</a>
       </p>
     </div>
   </section>
 
-  <!-- History -->
-  <section id="history">
+  <!-- ============ Community / Contribute (dark) ============ -->
+  <section class="section section-dark" id="community">
     <div class="wrap">
-      <h2 class="section-title">History</h2>
-
-      <ul class="history-list">
-
-        <li>
-          <time class="history-date" datetime="2026-09">2026 Sep</time> Re-launch project
-        </li>
-
-        <li>
-          <time class="history-date" datetime="2019-05-28">2019 May 28</time> Initial project
-        </li>
-      </ul>
-
-    </div>
-  </section>
-
-
-  <!-- Docs -->
-  <section id="docs">
-    <div class="wrap">
-      <div class="docs-row">
-        <div>
-          <h2 class="section-title">Documentation</h2>
-          <p class="section-sub">
-            Download &amp; verification, installation, hardware notes, keyboard
-            shortcuts and the roadmap all live in the wiki.
-          </p>
-        </div>
-        <a class="btn btn-ghost" href="https://github.com/kan-linux/kan/wiki" target="_blank" rel="noopener">Browse the wiki →</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contribute / CTA -->
-  <section id="contribute">
-    <div class="wrap">
-      <div class="cta">
-        <h2>Explore and have fun!</h2>
-        <p>
-          We build <a href="https://github.com/kan-linux/kan">Kan-Linux</a> in the
-          spirit of exploration. Contributors are encouraged to try crazy ideas, build wild
-          demos, and push the edge of what’s possible.
+      <div class="center-title">
+        <h2>Explore and have fun</h2>
+        <p class="sub">
+          We build Kan-Linux in the spirit of exploration. Try crazy ideas,
+          build wild demos, and push the edge of what's possible.
         </p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="https://github.com/kan-linux/kan" target="_blank" rel="noopener">Contribute on GitHub</a>
-          <a class="btn btn-ghost" href="https://github.com/kan-linux/kan/wiki" target="_blank" rel="noopener">Read the wiki</a>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          </div>
+          <h3>Roadmap</h3>
+          <p>
+            From PoC in QEMU to full self-hosting and the Agent-First stage —
+            see where Kan-Linux is heading.
+          </p>
+          <a class="more-link" href="roadmap.html">View the roadmap</a>
+        </div>
+
+        <div class="card">
+          <div class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>
+          </div>
+          <h3>Contribute</h3>
+          <p>
+            Contributions to fully open components — Kan-Agent, desktop shell,
+            Strata, Hyprland and more — are welcome.
+          </p>
+          <a class="more-link" href="contribute.html">How to contribute</a>
+        </div>
+
+        <div class="card">
+          <div class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <h3>Feedback</h3>
+          <p>
+            Hit a snag in a VM or on real hardware? Open an issue —
+            every report helps us refine and stabilize the distro.
+          </p>
+          <a class="more-link" href="https://github.com/kan-linux/kan/issues" target="_blank" rel="noopener">Open an issue</a>
         </div>
       </div>
     </div>
@@ -474,19 +181,15 @@ section {
 
 <footer class="site-footer">
   <div class="wrap">
-    <div class="footer-note">
-      <p>
+    <div class="footer-bottom">
+      <span>© 2026 Kan-Linux · <a href="https://kan-linux.org">kan-linux.org</a></span>
+      <span>
         This project may include trademarks or logos belonging to third parties.
         Use of any third-party trademarks is governed by their respective policies.
-      </p>
-      <p>© <span id="year">2026</span> Kan-Linux · <a href="https://kan-linux.org">kan-linux.org</a> · see through the delusions and return to simplicity</p>
+      </span>
     </div>
   </div>
 </footer>
 
-<script>
-  document.getElementById("year").textContent = new Date().getFullYear();
-</script>
-<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 </body>
 </html>
