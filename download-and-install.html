@@ -167,23 +167,44 @@ sudo dd if=kan-linux-0.3.2-x86_64.iso of=/dev/sdb bs=4M status=progress conv=fsy
         </p>
 
         <h3>Essential</h3>
-        <p>These options must appear in your BIOS and be enabled:</p>
+        <p>Two changes are required — note that the first one is a <em>disable</em>:</p>
+        <ol>
+          <li>
+            <strong>Disable Secure Boot.</strong>
+            Open the <em>Secure Boot</em> section (usually under a Security tab) and
+            make sure <em>Secure Boot Enable</em> is <strong>unchecked / disabled</strong>.
+            The LiveUSB will not boot while Secure Boot is enabled.
+          </li>
+          <li>
+            <strong>Put the LiveUSB first in the boot order.</strong>
+            In <em>Boot Sequence</em> / <em>Boot Order</em>, move the entry for your
+            USB stick (shown as <code>UEFI: &lt;your USB&gt;</code>) to the top of the
+            list, and keep the boot mode set to <strong>UEFI</strong>.
+          </li>
+        </ol>
         <div class="shot-grid">
           <figure class="shot">
             <img src="https://github.com/user-attachments/assets/4d339694-8185-4793-bca4-eacae4f09b6f"
-                 alt="Essential BIOS settings (1)" loading="lazy">
+                 alt="Secure Boot Enable left unchecked in BIOS" loading="lazy">
+            <figcaption>1. Secure Boot Enable — left unchecked, i.e. Secure Boot disabled.</figcaption>
           </figure>
           <figure class="shot">
             <img src="https://github.com/user-attachments/assets/009c4ac2-af49-4070-97d2-a83d21aeee04"
-                 alt="Essential BIOS settings (2)" loading="lazy">
+                 alt="USB drive moved to the top of the BIOS boot sequence" loading="lazy">
+            <figcaption>2. Boot Sequence — the LiveUSB first, boot mode set to UEFI.</figcaption>
           </figure>
         </div>
 
         <h3>Optional</h3>
-        <p>These options may not appear in your BIOS — enable them if available:</p>
+        <p>
+          If your BIOS has a <em>SATA Operation</em> option (common on Dell firmware),
+          set it to <strong>AHCI</strong> instead of RAID&nbsp;On. Skip this if the
+          option does not exist.
+        </p>
         <figure class="shot">
           <img src="https://github.com/user-attachments/assets/0014f102-2123-4aa1-84f4-65342832f9ea"
-               alt="Optional BIOS settings" loading="lazy">
+               alt="SATA Operation set to AHCI in BIOS" loading="lazy">
+          <figcaption>SATA Operation set to AHCI.</figcaption>
         </figure>
 
         <h3>3. Install from the LiveUSB</h3>
