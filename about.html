@@ -36,6 +36,19 @@
   <section class="page-hero">
     <div class="wrap">
       <h1>About Kan-Linux</h1>
+
+      Project Kan-Linux aims to deliver a minimalist, secure and modern pure Wayland Desktop-OS, letting users choose what to install from official prebuilt binary, source code or by
+          <a href="https://github.com/kan-linux/kan-agent" target="_blank" rel="noopener">Kan-Agent</a>
+. It comes with a featured set of development toolchains (GCC, LLVM, Java, Perl, Python, Go, Rust), Firefox, Wireshark, VLC, GIMP, featured terminal, featured File Manager, featured Coding Agent, featured snip tool, various CLI tools and a lean desktop shell(currently
+          <a href="https://github.com/kan-linux/omarchy" target="_blank" rel="noopener">a highly-customized Omarchy desktop shell</a>
+), it is a bare-bones OS with no bundled office suite. The reasoning is that every user has their own preferences for what to install on their computer, while following the "Convention over Configuration" philosophy.
+
+        <p>
+          <br>
+          The main goal of Kan-Linux is to build a concise, secure and Agent-first
+          Linux distro at the edge --- locally and in the cloud.
+        </p>
+
     </div>
   </section>
 
@@ -58,15 +71,12 @@
           <strong>Kan-Linux</strong> (or KanLinux) is a <strong>concise</strong>,
           <strong>secure</strong> and <strong>Agent-first</strong> Linux distribution.
           The name <strong>Kan (勘)</strong> derives from
-          <a href="https://en.wikipedia.org/wiki/Wang_Yangming" target="_blank" rel="noopener">Wang Yangming</a>'s
-          <em>Instructions for Practical Living</em>, representing the philosophy of
+          <a href="https://en.wikipedia.org/wiki/Wang_Yangming" target="_blank" rel="noopener">Wang Yangming</a>
+          's <em>Instructions for Practical Living</em>, representing the philosophy of
           breaking through technical obscurations and returning to the system's
           original simplicity.
         </p>
-        <p>
-          The main goal of Kan-Linux is to build a concise, secure and Agent-first
-          Linux distro at the edge — locally and in the cloud.
-        </p>
+
 
         <!-- ============================================================ -->
         <h2 id="principles">Design principles</h2>
@@ -79,7 +89,7 @@
           <strong>Kan-Linux is not dependent on any existing Linux distribution.</strong>
         </p>
         <ul>
-          <li>Keep the LiveISO compact while supporting a rich set of modern desktop features.</li>
+            <li>Keep the LiveISO compact(<strong>ubuntu-26.04-desktop-amd64.iso ~6.1 GiB</strong>, pop-os_24.04_amd64_generic_27.iso ~3.3 GiB, <strong>cachyos-desktop-linux-260809.iso ~3.0 GiB</strong>, omarchy-4.0.6.iso ~6.3 GiB, <strong>omarchy-4.5.0-x86.iso ~ 6.1 GiB</strong>, deepin-desktop-community-25.2.0-amd64.iso ~6.5 GiB, <strong>kan-linux-0.3.2-x86_64.iso ~ 1.9 GiB, kan-linux-v0.3.3-x86_64.iso ~ 2.0 GiB</strong>) while supporting a rich set of modern desktop features.</li>
           <li>
             The full self-hosting bootstrapping pipeline covers only the OS base system.
             Heavy desktop applications (Chromium, office suite, …) are built separately on
@@ -173,6 +183,13 @@
           <li>
             Kan-Linux provides Omarchy-comparable desktop UI and keybindings plus powerful
             development environments for programmers and AI Agents.
+          </li>
+        </ul>
+
+        <h2 id="omarchy">Differences with Rocky-Linux</h2>
+        <ul>
+          <li>
+            Rocky-Linux is an Enterprise-OS while Kan-Linux is a Desktop-OS.
           </li>
         </ul>
 
