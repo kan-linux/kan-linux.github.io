@@ -47,6 +47,7 @@
           <li><a href="#vm">Run the LiveISO in a virtual machine</a></li>
           <li><a href="#vm-install">Install Kan-Linux to a virtual disk</a></li>
           <li><a href="#hardware">Use the LiveISO on real x86-64 laptops and PCs</a></li>
+          <li><a href="#update">Update an installed system</a></li>
         </ul>
       </nav>
 
@@ -229,6 +230,17 @@ sudo dd if=kan-linux-0.3.2-x86_64.iso of=/dev/sdb bs=4M status=progress conv=fsy
                alt="Kan-Linux desktop after installation" loading="lazy" width="1920" height="1080">
           <figcaption>Kan-Linux desktop — modern Wayland session with the customized Omarchy shell.</figcaption>
         </figure>
+
+        <!-- ============================================================ -->
+        <h2 id="update">Update an installed system</h2>
+        <p>
+          To upgrade from an already installed Kan-Linux, boot the LiveUSB
+          (created from the LiveISO of the new release) and run the installer as
+          usual. When the installer asks for
+          the installation mode, choose <strong>Overwrite Installation</strong> —
+          this installs the new release over the existing system, and the data in
+          your <code>/home</code> directory is preserved.
+        </p>
       </div>
     </div>
   </div>
