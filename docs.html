@@ -86,15 +86,22 @@
           is under development.
         </p>
 
-        <h3>Update Firefox, MiMo-Code and Java SDK (preinstalled)</h3>
-        <p>Ask the built-in MiCode (or run it yourself):</p>
+        <h3>Update prebuilt components preinstalled in the image</h3>
+        <p>
+          Firefox, MiMo-Code, Java, Go, Rust and Node.js are preinstalled in the
+          image. Update them via the built-in script — run it yourself, or let
+          the built-in MiCode execute it (root privileges required):
+        </p>
         <pre><code>read /opt/skills/install-prebuilts.sh carefully, and then
-execute sudo /opt/skills/install-prebuilts.sh to update Firefox / MiMo-Code / Java SDK</code></pre>
+execute sudo /opt/skills/install-prebuilts.sh to update Firefox / MiMo-Code / Java / Go / Rust / Node.js</code></pre>
 
-        <h3>Install Go, Rust, NodeJS, Vulkan SDK and LibreOffice</h3>
-        <p>Ask the built-in MiCode (or run it yourself):</p>
+        <h3>Install prebuilt components not included in the image</h3>
+        <p>
+          LibreOffice and Vulkan SDK are not preinstalled in the image. Install
+          them via the same script (root privileges required):
+        </p>
         <pre><code>read /opt/skills/install-prebuilts.sh carefully, and then
-execute sudo /opt/skills/install-prebuilts.sh to install Go / Rust / NodeJS / Vulkan SDK / LibreOffice</code></pre>
+execute sudo /opt/skills/install-prebuilts.sh to install LibreOffice / Vulkan SDK</code></pre>
 
       </div>
     </div>
