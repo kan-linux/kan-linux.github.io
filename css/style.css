@@ -21,6 +21,10 @@
   --accent-soft: #fbe9dc;
   --accent-line: #f0c3a4;
 
+  --progress: #2e6f9e;
+  --progress-deep: #245a80;
+  --progress-soft: #e4eef6;
+
   --border: #e8e0d4;
   --border-soft: #f0e9de;
 
@@ -879,6 +883,24 @@ kbd {
 }
 .roadmap li.done strong {
   color: var(--text);
+}
+.roadmap li.in-progress::before {
+  background: var(--progress);
+  border-color: var(--progress);
+}
+.roadmap .badge-progress {
+  display: inline-block;
+  margin-left: 0.55rem;
+  padding: 0.14rem 0.58rem;
+  border-radius: 999px;
+  background: var(--progress-soft);
+  color: var(--progress-deep);
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 620;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  vertical-align: 0.08em;
 }
 .roadmap .stage {
   font-family: var(--font-display);
