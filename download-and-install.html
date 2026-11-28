@@ -55,20 +55,20 @@
         <h2 id="verify">Download &amp; integrity verification</h2>
         <p>
           Download the LiveISO and its SHA256 checksum from the GitHub release page.
-          The commands below use v0.3.3 as an example.
+          The commands below use v0.3.4 as an example.
         </p>
 
-        <pre><code>wget https://github.com/kan-linux/kan/releases/download/v0.3.3/kan-linux-0.3.3-x86_64.iso
-wget https://github.com/kan-linux/kan/releases/download/v0.3.3/kan-linux-0.3.3-x86_64.iso.sha256</code></pre>
+        <pre><code>wget https://github.com/kan-linux/kan/releases/download/v0.3.4/kan-linux-0.3.4-x86_64.iso
+wget https://github.com/kan-linux/kan/releases/download/v0.3.4/kan-linux-0.3.4-x86_64.iso.sha256</code></pre>
 
         <p>Verify the downloaded image with the SHA256 checksum:</p>
 
-        <pre><code>sha256sum -c kan-linux-0.3.3-x86_64.iso.sha256</code></pre>
+        <pre><code>sha256sum -c kan-linux-0.3.4-x86_64.iso.sha256</code></pre>
 
         <p>If the output shows <code>OK</code>, the file is intact:</p>
 
-        <pre><code>$ sha256sum -c kan-linux-0.3.3-x86_64.iso.sha256
-kan-linux-0.3.3-x86_64.iso: OK</code></pre>
+        <pre><code>$ sha256sum -c kan-linux-0.3.4-x86_64.iso.sha256
+kan-linux-0.3.4-x86_64.iso: OK</code></pre>
 
         <!-- ============================================================ -->
         <h2 id="vm">Run the LiveISO in a virtual machine</h2>
@@ -80,9 +80,9 @@ kan-linux-0.3.3-x86_64.iso: OK</code></pre>
         <h3>Launch the LiveISO</h3>
 
         <pre><code>qemu-system-x86_64 -enable-kvm -cpu host -m 4G -smp 2 \
-  -cdrom kan-linux-0.3.3-x86_64.iso \
+  -cdrom kan-linux-0.3.4-x86_64.iso \
   -device virtio-vga,xres=1920,yres=1080 -display gtk \
-  -smbios type=1,manufacturer="kan-linux",product="kan-linux 0.3.3",version="0.3.3" \
+  -smbios type=1,manufacturer="kan-linux",product="kan-linux 0.3.4",version="0.3.4" \
   -usb -device usb-tablet \
   -audiodev pa,id=audio0,out.buffer-length=100000,in.buffer-length=100000,timer-period=1000 \
   -device intel-hda -device hda-duplex,audiodev=audio0 \
@@ -98,9 +98,9 @@ kan-linux-0.3.3-x86_64.iso: OK</code></pre>
         <h3>2. Launch the LiveISO with the virtual disk attached</h3>
         <pre><code>qemu-system-x86_64 -enable-kvm -cpu host -m 4G -smp 2 \
   -drive file=kanlinux.qcow2,format=qcow2,if=virtio \
-  -cdrom kan-linux-0.3.3-x86_64.iso -boot d \
+  -cdrom kan-linux-0.3.4-x86_64.iso -boot d \
   -device virtio-vga-gl,xres=1920,yres=1080 -display gtk,gl=on \
-  -smbios type=1,manufacturer=Kan-Linux,product=Kan-Linux 0.3.3,version=0.3.3 \
+  -smbios type=1,manufacturer=Kan-Linux,product=Kan-Linux 0.3.4,version=0.3.4 \
   -usb -device usb-tablet \
   -audiodev pa,id=audio0,out.buffer-length=100000,in.buffer-length=100000,timer-period=1000 \
   -device intel-hda -device hda-duplex,audiodev=audio0 \
@@ -141,7 +141,7 @@ kan-linux-0.3.3-x86_64.iso: OK</code></pre>
         <pre><code>qemu-system-x86_64 -enable-kvm -cpu host -m 4G -smp 2 \
   -drive file=kanlinux.qcow2,format=qcow2,if=virtio \
   -device virtio-vga-gl,xres=1920,yres=1080 -display gtk,gl=on \
-  -smbios type=1,manufacturer=Kan-Linux,product=Kan-Linux 0.3.3,version=0.3.3 \
+  -smbios type=1,manufacturer=Kan-Linux,product=Kan-Linux 0.3.4,version=0.3.4 \
   -usb -device usb-tablet \
   -audiodev pa,id=audio0,out.buffer-length=100000,in.buffer-length=100000,timer-period=1000 \
   -device intel-hda -device hda-duplex,audiodev=audio0 \
@@ -163,7 +163,7 @@ kan-linux-0.3.3-x86_64.iso: OK</code></pre>
         <pre><code># verify the USB device path is /dev/sdb with lsblk  (ATTENTION here)
 lsblk
 
-sudo dd if=kan-linux-0.3.3-x86_64.iso of=/dev/sdb bs=4M status=progress conv=fsync</code></pre>
+sudo dd if=kan-linux-0.3.4-x86_64.iso of=/dev/sdb bs=4M status=progress conv=fsync</code></pre>
 
         <h3>2. Configure BIOS settings</h3>
         <p>
